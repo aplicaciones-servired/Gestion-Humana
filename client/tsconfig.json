@@ -1,5 +1,26 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+  "compilerOptions": {
+    "noEmit": true,
+    "strict": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "ignoreDeprecations": "5.0"
+  },
+  "include": [
+    ".astro/types.d.ts",
+    "src/**/*",
+    "types/**/*.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "env.schema.mjs"
+  ],
+  "exclude": ["dist", "node_modules", "src/**/*.js"]
 }
