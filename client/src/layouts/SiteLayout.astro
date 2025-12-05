@@ -1,0 +1,29 @@
+---
+import "../styles/global.css";
+import { ViewTransitions } from "astro:transitions";
+import ClerkWrapper from "@/components/ClerkWrapper";
+import Header from "@/components/astro/Header.astro";
+
+const user = await Astro.locals.currentUser();
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Gestion Humana</title>
+    <ViewTransitions />
+  </head>
+
+  <body class="min-h-screen flex flex-col bg-gray-100">
+    <ClerkWrapper client:load>
+      <Header />
+      <main transition:animate="slide">
+        <slot />
+      </main>
+    </ClerkWrapper>
+  </body>
+</html>

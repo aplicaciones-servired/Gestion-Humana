@@ -1,0 +1,86 @@
+---
+import { UserButton } from "@clerk/astro/components";
+import menu from "../../config/menu.json";
+import EmpresaSelector from "../EmpresaSelector";
+const { pathname } = Astro.url;
+const stickyHeader = true;
+---
+
+<header
+  transition:persist
+  class={`container mx-auto px-6 py-4 z-30 mb-4 lg:mb-0 lg:mt-4 lg:rounded-2xl backdrop-blur-md bg-white/90 border border-gray-200/50 shadow-sm ${
+    stickyHeader ? "sticky top-4" : ""
+  }`}
+>
+  <nav class="relative flex items-center justify-between gap-4">
+    <!-- Navbar Toggler (Mobile) -->
+    <input id="nav-toggle" type="checkbox" class="hidden peer" />
+    <label
+      for="nav-toggle"
+      class="md:hidden cursor-pointer flex items-center text-gray-700 ml-auto"
+    >
+      <svg
+        class="h-6 w-6 fill-current block peer-checked:hidden"
+        viewBox="0 0 20 20"
+      >
+        <title>Menu Open</title>
+        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+      </svg>
+      <svg
+        class="h-6 w-6 fill-current hidden peer-checked:block"
+        viewBox="0 0 20 20"
+      >
+        <title>Menu Close</title>
+        <path
+          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+        ></path>
+      </svg>
+    </label>
+
+     <!-- Selector de Empresa (Izquierda) -->
+    <div class="flex items-center">
+      <div class="w-44">
+        <EmpresaSelector client:load />
+      </div>
+    </div>
+    <!-- Menu (Centro) -->
+    <ul
+      id="nav-menu"
+      class="hidden peer-checked:flex flex-col md:flex md:flex-row absolute md:relative top-full left-0 right-0 md:top-auto bg-white md:bg-transparent md:mx-auto md:space-x-1 pb-6 md:pb-0 mt-4 md:mt-0 border-t md:border-0 border-gray-200/50 md:shadow-none shadow-lg"
+    >
+      {
+        menu.main.map((item) => {
+          const isActive = pathname === `${item.url}/` || pathname === item.url;
+          return (
+            <li>
+              <a
+                href={item.url}
+                class={`block px-4 py-2 font-medium rounded-lg transition-colors duration-200 ${
+                  isActive
+                    ? "bg-blue-50 text-blue-600"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`}
+              >
+                {item.name}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <!-- UserButton (Derecha) -->
+    <div class="flex items-center gap-2">
+      <UserButton
+        afterSignOutUrl="/"
+        showName
+        appearance={{
+          elements: {
+            userButtonMenuItem__manageAccount: { display: "none" },
+            userButtonMenuItem__addAccount: { display: "none" },
+          },
+        }}
+      />
+    </div>
+  </nav>
+</header>
