@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Página no encontrada</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Dosis:300,400,500"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        font-family: "Dosis", sans-serif;
+        font-weight: 300;
+        user-select: none;
+        overflow: hidden;
+      }
+
+      .bg-purple {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background-image: url("http://salehriaz.com/404Page/img/bg_purple.png");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .stars-overlay {
+        position: absolute;
+        inset: 0;
+        background-image: url("http://salehriaz.com/404Page/img/overlay_stars.svg");
+        background-size: contain;
+        background-repeat: repeat;
+        background-position: center;
+      }
+
+      /* Navbar */
+      .navbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 150;
+        padding: 1.5rem 3rem;
+      }
+
+      .navbar nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        display: inline-block;
+      }
+
+      .logo img {
+        width: 60px;
+      }
+
+      .navbar ul {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 0.15em;
+      }
+
+      .navbar a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .navbar a:hover {
+        color: #ffcb39;
+      }
+
+      .btn-demo {
+        padding: 0.5rem 1.5rem;
+        color: white;
+        font-size: 12px;
+        text-decoration: none;
+        border: 1px solid #ffcb39;
+        border-radius: 50px;
+        font-weight: 400;
+        transition: all 0.3s;
+      }
+
+      .btn-demo:hover {
+        background-color: #ffcb39;
+        transform: scale(1.05);
+      }
+
+      /* Central Body */
+      .central-body {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 120;
+        text-align: center;
+        width: 100%;
+        padding: 0 1rem;
+      }
+
+      .central-body h1 {
+        color: white;
+        font-size: 200px;
+        font-weight: bold;
+        line-height: 1;
+        margin-bottom: 1rem;
+      }
+
+      .central-body p {
+        color: white;
+        font-size: 20px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+      }
+
+      .btn-go-home {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        color: white;
+        font-size: 12px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: 1px solid #ffcb39;
+        border-radius: 50px;
+        font-weight: 400;
+        transition: all 0.3s;
+      }
+
+      .btn-go-home:hover {
+        background-color: #ffcb39;
+        transform: scale(1.05);
+      }
+
+      /* Objects */
+      .objects {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .object_rocket {
+        position: absolute;
+        bottom: 5%;
+        left: -50px;
+        z-index: 95;
+        width: 64px;
+        animation: rocket-movement 200s linear infinite;
+      }
+
+      .object_earth {
+        position: absolute;
+        top: 10%;
+        left: 12%;
+        z-index: 90;
+        width: 120px;
+      }
+
+      .object_moon {
+        position: absolute;
+        top: 5%;
+        left: 22%;
+        width: 70px;
+      }
+
+      .object_astronaut {
+        position: absolute;
+        top: 45%;
+        right: 8%;
+        z-index: 110;
+        animation: move-astronaut 50s infinite linear alternate;
+      }
+
+      .object_astronaut img {
+        width: 160px;
+        animation: rotate-astronaut 20s infinite linear;
+      }
+
+      /* Glowing Stars */
+      .stars {
+        position: absolute;
+        inset: 0;
+      }
+
+      .star {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        border-radius: 50%;
+        background: white;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      }
+
+      .star-1 {
+        top: 80%;
+        left: 25%;
+        animation: glow-star 2s infinite ease-in-out 0s;
+      }
+
+      .star-2 {
+        top: 20%;
+        left: 40%;
+        animation: glow-star 2s infinite ease-in-out 1s;
+      }
+
+      .star-3 {
+        top: 25%;
+        left: 25%;
+        animation: glow-star 2s infinite ease-in-out 2s;
+      }
+
+      .star-4 {
+        top: 75%;
+        left: 80%;
+        animation: glow-star 2s infinite ease-in-out 3s;
+      }
+
+      .star-5 {
+        top: 90%;
+        left: 50%;
+        animation: glow-star 2s infinite ease-in-out 4s;
+      }
+
+      /* Animations */
+      @keyframes rocket-movement {
+        100% {
+          transform: translate(1400px, -800px);
+        }
+      }
+
+      @keyframes move-astronaut {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        100% {
+          transform: translate(-100px, -100px) rotate(360deg);
+        }
+      }
+
+      @keyframes rotate-astronaut {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes glow-star {
+        0%,
+        100% {
+          opacity: 0.3;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.5);
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .navbar {
+          padding: 1rem;
+        }
+
+        .logo img {
+          width: 48px;
+        }
+
+        .navbar ul {
+          gap: 0.75rem;
+          font-size: 10px;
+        }
+
+        .central-body h1 {
+          font-size: 120px;
+        }
+
+        .central-body p {
+          font-size: 16px;
+        }
+
+        .object_rocket {
+          width: 40px;
+        }
+
+        .object_earth {
+          left: 8%;
+          width: 80px;
+        }
+
+        .object_moon {
+          left: 18%;
+          width: 50px;
+        }
+
+        .object_astronaut {
+          top: 50%;
+          right: 3%;
+        }
+
+        .object_astronaut img {
+          width: 100px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="bg-purple">
+      <div class="stars-overlay">
+        <!-- Navbar -->
+        <div class="navbar">
+          <nav>
+            <div class="logo">
+              <img
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='75' font-size='60' fill='%23FFCB39'%3E⚡%3C/text%3E%3C/svg%3E"
+                width="60"
+                alt="Logo"
+              />
+            </div>
+          </nav>
+        </div>
+
+        <!-- Central Body -->
+        <div class="central-body">
+          <h1>404</h1>
+          <p>Parece que estás<br />perdido en el espacio</p>
+          <a href="/Home" class="btn-go-home">Volver al inicio</a>
+        </div>
+
+        <!-- Objects -->
+        <div class="objects">
+          <img
+            src="http://salehriaz.com/404Page/img/rocket.svg"
+            alt="Rocket"
+            class="object_rocket"
+          />
+
+          <img
+            src="http://salehriaz.com/404Page/img/earth.svg"
+            alt="Earth"
+            class="object_earth"
+          />
+          <img
+            src="http://salehriaz.com/404Page/img/moon.svg"
+            alt="Moon"
+            class="object_moon"
+          />
+
+          <div class="object_astronaut">
+            <img
+              src="http://salehriaz.com/404Page/img/astronaut.svg"
+              alt="Astronaut"
+            />
+          </div>
+        </div>
+
+        <!-- Glowing Stars -->
+        <div class="stars">
+          <div class="star star-1"></div>
+          <div class="star star-2"></div>
+          <div class="star star-3"></div>
+          <div class="star star-4"></div>
+          <div class="star star-5"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -6,6 +6,8 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
+    "types": ["react", "react-dom"],
     "jsxImportSource": "react",
     "skipLibCheck": true,
     "paths": {
@@ -13,6 +15,7 @@
     },
     "ignoreDeprecations": "5.0"
   },
+  "extends": "astro/tsconfigs/base",
   "include": [
     ".astro/types.d.ts",
     "src/**/*",

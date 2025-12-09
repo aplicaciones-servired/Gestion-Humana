@@ -1,10 +1,10 @@
 ---
 import "../styles/global.css";
 import { ViewTransitions } from "astro:transitions";
-import ClerkWrapper from "@/components/ClerkWrapper";
+import ClerkWrapper from "@/auth/ClerkWrapper";
 import Header from "@/components/astro/Header.astro";
+import { slide } from "astro:transitions";
 
-const user = await Astro.locals.currentUser();
 ---
 
 <!doctype html>
@@ -18,10 +18,10 @@ const user = await Astro.locals.currentUser();
     <ViewTransitions />
   </head>
 
-  <body class="min-h-screen flex flex-col bg-gray-100">
+  <body class="min-h-screen flex flex-col bg-linear-to-tr from-blue-100 to-pink-100 w-full h-full">
     <ClerkWrapper client:load>
       <Header />
-      <main transition:animate="slide">
+      <main transition:animate={slide({ duration: "0.4s" })}>
         <slot />
       </main>
     </ClerkWrapper>

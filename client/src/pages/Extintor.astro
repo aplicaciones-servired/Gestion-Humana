@@ -1,11 +1,11 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import Welcome from "../components/Welcome";
+import GetExtintor from "../components/GetExtintor";
 import { SignedIn } from "@clerk/astro/react";
 ---
 
 <SiteLayout>
   <SignedIn>
-    <Welcome client:only="react" />
+    <GetExtintor client:only="react" datos="Ejemplo de datos" />
   </SignedIn>
 </SiteLayout>

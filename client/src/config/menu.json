@@ -2,56 +2,50 @@
   "main": [
     {
       "name": "Home",
-      "url": "/Home"
+      "url": "/"
     },
     {
-      "name": "About",
-      "url": "/about"
-    },
-    {
-      "name": "Elements",
-      "url": "/elements"
-    },
-    {
-      "name": "Pages",
+      "name": "Inspecciones",
       "url": "",
       "hasChildren": true,
       "children": [
         {
-          "name": "Contact",
-          "url": "/contact"
+          "name": "Inspección Extintor",
+          "url": "/Extintor"
         },
         {
-          "name": "Blog",
-          "url": "/blog"
+          "name": "Inspección Botiquín",
+          "url": "/Botiquin"
         },
         {
-          "name": "Authors",
-          "url": "/authors"
+          "name": "Inspección Locativa",
+          "url": "/Locativa"
         },
         {
-          "name": "Categories",
-          "url": "/categories"
+          "name": "Inspección Bodega",
+          "url": "/Bodega"
         },
         {
-          "name": "Tags",
-          "url": "/tags"
+          "name": "Inspección Camilla",
+          "url": "/Camilla"
         },
         {
-          "name": "404 Page",
-          "url": "/404"
+          "name": "Inspección Protección",
+          "url": "/Protecion"
+        },
+        {
+          "name": "Inspección Herramientas",
+          "url": "/Herraminetas"
+        },
+        {
+          "name": "Inspección Operacional",
+          "url": "/Operacional"
+        },
+        {
+          "name": "Inspección Bicicleta",
+          "url": "/Bicicleta"
         }
       ]
-    }
-  ],
-  "footer": [
-    {
-      "name": "Elements",
-      "url": "/elements"
-    },
-    {
-      "name": "Privacy Policy",
-      "url": "/privacy-policy"
     }
   ]
 }

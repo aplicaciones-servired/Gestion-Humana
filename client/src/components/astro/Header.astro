@@ -2,6 +2,7 @@
 import { UserButton } from "@clerk/astro/components";
 import menu from "../../config/menu.json";
 import EmpresaSelector from "../EmpresaSelector";
+import HeaderLink from "./HeaderLink.astro";
 const { pathname } = Astro.url;
 const stickyHeader = true;
 ---
@@ -13,6 +14,13 @@ const stickyHeader = true;
   }`}
 >
   <nav class="relative flex items-center justify-between gap-4">
+    <!-- Selector de Empresa (Izquierda) -->
+    <div class="flex items-center">
+      <div class="w-44">
+        <EmpresaSelector client:load />
+      </div>
+    </div>
+
     <!-- Navbar Toggler (Mobile) -->
     <input id="nav-toggle" type="checkbox" class="hidden peer" />
     <label
@@ -37,32 +45,65 @@ const stickyHeader = true;
       </svg>
     </label>
 
-     <!-- Selector de Empresa (Izquierda) -->
-    <div class="flex items-center">
-      <div class="w-44">
-        <EmpresaSelector client:load />
-      </div>
-    </div>
     <!-- Menu (Centro) -->
     <ul
       id="nav-menu"
-      class="hidden peer-checked:flex flex-col md:flex md:flex-row absolute md:relative top-full left-0 right-0 md:top-auto bg-white md:bg-transparent md:mx-auto md:space-x-1 pb-6 md:pb-0 mt-4 md:mt-0 border-t md:border-0 border-gray-200/50 md:shadow-none shadow-lg"
+      class="hidden peer-checked:flex flex-col md:flex md:flex-row absolute md:relative top-full left-0 right-0 md:top-auto bg-white md:bg-transparent md:mx-auto md:space-x-1 pb-6 md:pb-0 mt-4 md:mt-0 border-t md:border-0 border-gray-200/50 md:shadow-none shadow-lg z-50"
     >
       {
         menu.main.map((item) => {
           const isActive = pathname === `${item.url}/` || pathname === item.url;
+
+          if (item.hasChildren) {
+            return (
+              <li class="relative group">
+                <button
+                  class="dropdown-button flex items-center gap-1 w-full px-4 py-2 font-medium rounded-lg transition-colors duration-200 text-gray-700 hover:bg-gray-100"
+                  data-dropdown
+                >
+                  {item.name}
+                  <svg
+                    class="w-4 h-4 transition-transform group-hover:rotate-180"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <ul class="dropdown-menu hidden group-hover:md:block md:absolute md:left-0 md:top-[calc(100%+0.25rem)] md:w-56 md:bg-white md:rounded-lg md:shadow-lg md:border md:border-gray-200/50 md:py-2 md:before:content-[''] md:before:absolute md:before:bottom-full md:before:left-0 md:before:right-0 md:before:h-2">
+                  {item.children?.map((child) => (
+                    <li>
+                      <HeaderLink
+                        href={child.url}
+                        class="block hover:scale-105 px-4 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-gray-300 transition-colors"
+                      >
+                        {child.name}
+                      </HeaderLink>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            );
+          }
+
           return (
             <li>
-              <a
+              <HeaderLink
                 href={item.url}
                 class={`block px-4 py-2 font-medium rounded-lg transition-colors duration-200 ${
                   isActive
-                    ? "bg-blue-50 text-blue-600"
-                    : "text-gray-700 hover:bg-gray-100"
+                    ? "hover:scale-105 transition bg-blue-50 text-blue-600"
+                    : "hover:scale-105 transition text-gray-700 hover:text-blue-600 hover:bg-gray-300"
                 }`}
               >
                 {item.name}
-              </a>
+              </HeaderLink>
             </li>
           );
         })
@@ -84,3 +125,47 @@ const stickyHeader = true;
     </div>
   </nav>
 </header>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const dropdownButtons = document.querySelectorAll("[data-dropdown]");
+
+    dropdownButtons.forEach((button) => {
+      const parent = button.closest("li");
+      const menu = parent?.querySelector(".dropdown-menu");
+
+      // Toggle en mobile
+      button.addEventListener("click", (e) => {
+        if (window.innerWidth < 768) {
+          e.preventDefault();
+          menu?.classList.toggle("hidden");
+        }
+      });
+
+      // Mantener abierto en desktop cuando el mouse está sobre el menú
+      if (parent && menu) {
+        let timeoutId: number;
+
+        const show = () => {
+          if (window.innerWidth >= 768) {
+            clearTimeout(timeoutId);
+            menu.classList.remove("hidden");
+          }
+        };
+
+        const hide = () => {
+          if (window.innerWidth >= 768) {
+            timeoutId = window.setTimeout(() => {
+              menu.classList.add("hidden");
+            }, 100);
+          }
+        };
+
+        parent.addEventListener("mouseenter", show);
+        parent.addEventListener("mouseleave", hide);
+        menu.addEventListener("mouseenter", show);
+        menu.addEventListener("mouseleave", hide);
+      }
+    });
+  });
+</script>
