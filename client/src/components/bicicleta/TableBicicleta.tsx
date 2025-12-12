@@ -1,22 +1,19 @@
-import { useEffect } from "react";
-import type { Extintor } from "@/Types/Extintor.d";
-import { useFiltersExtintor } from "@/Hooks/useFiltersExtintor";
+import type { Bicicleta } from "@/Types/Bicicleta.d";
+import { useFiltersBicicleta } from "@/Hooks/useFiltersBicicleta";
 
-interface TableExtintorProps {
-    DataExtintor: Extintor[];
-    pagination?: React.ReactNode;
+interface TableBicicletaProps {
+    DataBicicleta: Bicicleta[];
 }
 
-const TableExtintor = ({ DataExtintor, pagination }: TableExtintorProps) => {
-    const { filteredPDV, searchfecha, setSearchFecha } = useFiltersExtintor(DataExtintor);
+const TableBicicleta = ({ DataBicicleta }: TableBicicletaProps) => {
+    const { filteredData, searchfecha, setSearchFecha } = useFiltersBicicleta(DataBicicleta);
 
     return (
         <section className="container px-4 mx-auto bg-white rounded-md h-full">
-            {/* Header con título y filtro de fecha */}
             <div className="flex items-center justify-between mt-6 mb-4">
                 <div>
                     <h2 className="text-lg font-medium text-gray-800">
-                        Inspecciones de Extintores
+                        Inspecciones de Bicicletas
                     </h2>
                 </div>
 
@@ -34,7 +31,6 @@ const TableExtintor = ({ DataExtintor, pagination }: TableExtintorProps) => {
                 </div>
             </div>
 
-            {/* Tabla */}
             <div className="flex flex-col">
                 <div className="inline-block min-w-full py-2 align-middle">
                     <div className="overflow-hidden border border-gray-200 rounded-lg shadow-sm">
@@ -42,27 +38,27 @@ const TableExtintor = ({ DataExtintor, pagination }: TableExtintorProps) => {
                             <thead className="bg-gray-50">
                                 <tr>
                                     <th scope="col" className="py-3.5 px-4 text-xs font-semibold text-left text-gray-700 uppercase tracking-wider">
-                                        Fecha Inspección
+                                        Fecha
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-xs font-semibold text-left text-gray-700 uppercase tracking-wider">
-                                        Responsable
+                                        Nombre
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-xs font-semibold text-left text-gray-700 uppercase tracking-wider">
-                                        Documento
+                                        Cédula
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-xs font-semibold text-left text-gray-700 uppercase tracking-wider">
-                                        Lugar
+                                        Empresa
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-xs font-semibold text-left text-gray-700 uppercase tracking-wider">
-                                        Ubicación
+                                        Salud
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-xs font-semibold text-left text-gray-700 uppercase tracking-wider">
-                                        Próxima Recarga
+                                        Llantas
                                     </th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
-                                {filteredPDV.length === 0 ? (
+                                {filteredData.length === 0 ? (
                                     <tr>
                                         <td colSpan={6} className="px-4 py-12 text-center">
                                             <div className="flex flex-col items-center justify-center">
@@ -75,25 +71,25 @@ const TableExtintor = ({ DataExtintor, pagination }: TableExtintorProps) => {
                                         </td>
                                     </tr>
                                 ) : (
-                                    filteredPDV.map((extintor) => (
-                                        <tr key={extintor.ID} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
+                                    filteredData.map((bicicleta) => (
+                                        <tr key={bicicleta.ID} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
                                             <td className="px-4 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                                {extintor.fecha_inspeccion}
+                                                {bicicleta.fecha_inspeccion}
                                             </td>
                                             <td className="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
-                                                {extintor.responsable_inspeccion}
+                                                {bicicleta.nombre}
                                             </td>
                                             <td className="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
-                                                {extintor.responsable_documento}
+                                                {bicicleta.cedula}
                                             </td>
                                             <td className="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
-                                                {extintor.lugar_inspeccion}
+                                                {bicicleta.empresa}
                                             </td>
                                             <td className="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
-                                                {extintor.ubicación}
+                                                {bicicleta.salud}
                                             </td>
                                             <td className="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
-                                                {extintor.proxima_recarga}
+                                                {bicicleta.llantas}
                                             </td>
                                         </tr>
                                     ))
@@ -103,13 +99,8 @@ const TableExtintor = ({ DataExtintor, pagination }: TableExtintorProps) => {
                     </div>
                 </div>
             </div>
-            {pagination && (
-                <div className="mt-6 mb-4">
-                    {pagination}
-                </div>
-            )}
         </section>
     );
 }
 
-export default TableExtintor;
+export default TableBicicleta;

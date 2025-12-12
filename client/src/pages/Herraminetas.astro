@@ -1,0 +1,11 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import GetHerraminetas from "../components/GetHerraminetas";
+import { SignedIn } from "@clerk/astro/react";
+---
+
+<SiteLayout>
+  <SignedIn>
+    <GetHerraminetas client:only="react"/>
+  </SignedIn>
+</SiteLayout>

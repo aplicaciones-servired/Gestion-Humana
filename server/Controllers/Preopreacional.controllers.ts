@@ -6,19 +6,19 @@ export const getPreoperacionales = async (req = request, res = response) => {
   const page = parseInt(req.query.page as string) || 1;
   const pageSize = parseInt(req.query.pageSize as string) || 10;
   const offset = (page - 1) * pageSize;
-  const fecha_inspeccion = req.query.fecha_inspeccion as string;
+  const fecha = req.query.fecha as string;
   const fechaInicio = req.query.fechaInicio as string;
   const fechaFin = req.query.fechaFin as string;
 
   let whereClause: any = {};
 
   if (fechaInicio && fechaFin) {
-    whereClause.fecha_inspeccion = {
+    whereClause.fecha = {
       [Op.between]: [fechaInicio, fechaFin],
     };
-  } else if (fecha_inspeccion) {
-    whereClause.fecha_inspeccion = {
-      [Op.eq]: fecha_inspeccion,
+  } else if (fecha) {
+    whereClause.fecha = {
+      [Op.eq]: fecha,
     };
   }
 
@@ -28,7 +28,7 @@ export const getPreoperacionales = async (req = request, res = response) => {
       limit: pageSize,
       offset: offset,
       order: [
-        ["fecha_inspeccion", "DESC"],
+        ["fecha", "DESC"],
         ["id", "DESC"],
       ],
     });

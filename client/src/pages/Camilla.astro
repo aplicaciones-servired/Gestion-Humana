@@ -1,0 +1,11 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import GetCamilla from "../components/GetCamilla";
+import { SignedIn } from "@clerk/astro/react";
+---
+
+<SiteLayout>
+  <SignedIn>
+    <GetCamilla client:only="react"/>
+  </SignedIn>
+</SiteLayout>

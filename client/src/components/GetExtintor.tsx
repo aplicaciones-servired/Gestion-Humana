@@ -7,15 +7,16 @@ function GetExtintor(): React.ReactElement {
   const { dataExtintor, handlePageChange, page, total } = useExtintor();
   
   return (
-    <div className="space-y-4">
-      <TableExtintor DataExtintor={dataExtintor} />
-      
+    <TableExtintor 
+      DataExtintor={dataExtintor}
+      pagination={
         <RenderFooterInspe
           page={page}
           total={total}
           setPage={handlePageChange}
         />
-    </div>
+      }
+    />
   );
 }
 

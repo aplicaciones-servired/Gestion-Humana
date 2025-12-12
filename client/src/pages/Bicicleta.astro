@@ -1,0 +1,11 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import GetBicicleta from "../components/GetBicicleta";
+import { SignedIn } from "@clerk/astro/react";
+---
+
+<SiteLayout>
+  <SignedIn>
+    <GetBicicleta client:only="react"/>
+  </SignedIn>
+</SiteLayout>

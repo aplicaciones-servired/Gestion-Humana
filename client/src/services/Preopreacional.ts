@@ -1,0 +1,70 @@
+import { useEffect, useState } from "react";
+import { useEmpresa } from "../components/ui/useEmpresa";
+import axios from "axios";
+import { API_URL } from "@/utils/constans";
+import type { Preopreacional } from "@/Types/Preopreacional.d";
+
+interface PreopreacionalResponse {
+  datos: Preopreacional[];
+  count: number;
+  totalCount: number;
+}
+
+interface PreopreacionalPagi {
+  totalClients: number;
+}
+
+export const usePreopreacional = (fecha?: string) => {
+  const [dataPreopreacional, setDataPreopreacional] = useState<Preopreacional[]>([]);
+  const [PreopreacionalSegui, setPreopreacionalSegui] = useState<Preopreacional[]>([]);
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(10);
+  const [state, setState] = useState<PreopreacionalPagi>({
+    totalClients: 0,
+  });
+  const [totalCount, setTotalCount] = useState<number>();
+  const { empresa } = useEmpresa();
+
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      try {
+        let url = `${API_URL}/preoperacional?&page=${page}&pageSize=${pageSize}`;
+        if (fecha) {
+          url = url.concat(`&fecha=${fecha}`);
+        }
+
+        const response = await axios.get<PreopreacionalResponse>(url);
+
+        if (response.status === 200) {
+          setDataPreopreacional(response.data.datos);
+          setPreopreacionalSegui(response.data.datos);
+          setTotalCount(response.data.count);
+          setState((prevState) => ({
+            ...prevState,
+            totalClients: response.data.count,
+          }));
+        }
+      } catch (error) {
+        console.error("Error fetching preopreacionales:", error);
+      }
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 60000);
+    return () => clearInterval(interval);
+  }, [empresa, page, pageSize, fecha]);
+
+  const total = Math.ceil(state.totalClients / pageSize);
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  return {
+    dataPreopreacional,
+    PreopreacionalSegui,
+    page,
+    total,
+    handlePageChange,
+    totalCount,
+  };
+};

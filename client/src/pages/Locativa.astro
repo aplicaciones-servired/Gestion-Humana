@@ -1,0 +1,11 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import GetLocativa from "../components/GetLocativa";
+import { SignedIn } from "@clerk/astro/react";
+---
+
+<SiteLayout>
+  <SignedIn>
+    <GetLocativa client:only="react"/>
+  </SignedIn>
+</SiteLayout>

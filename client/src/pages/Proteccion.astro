@@ -1,0 +1,11 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import GetProteccion from "../components/GetProteccion";
+import { SignedIn } from "@clerk/astro/react";
+---
+
+<SiteLayout>
+  <SignedIn>
+    <GetProteccion client:only="react"/>
+  </SignedIn>
+</SiteLayout>

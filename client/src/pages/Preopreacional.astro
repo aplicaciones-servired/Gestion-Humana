@@ -1,0 +1,11 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import GetPreopreacional from "../components/GetPreopreacional";
+import { SignedIn } from "@clerk/astro/react";
+---
+
+<SiteLayout>
+  <SignedIn>
+    <GetPreopreacional client:only="react"/>
+  </SignedIn>
+</SiteLayout>

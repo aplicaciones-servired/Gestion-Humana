@@ -1,0 +1,11 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import GetBotiquin from "../components/GetBotiquin";
+import { SignedIn } from "@clerk/astro/react";
+---
+
+<SiteLayout>
+  <SignedIn>
+    <GetBotiquin client:only="react"/>
+  </SignedIn>
+</SiteLayout>
