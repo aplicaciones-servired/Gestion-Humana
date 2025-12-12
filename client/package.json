@@ -23,6 +23,7 @@
     "@types/react-dom": "^19.2.3",
     "astro": "^5.16.4",
     "axios": "^1.13.2",
+    "exceljs": "^4.4.0",
     "lucide-react": "^0.561.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",

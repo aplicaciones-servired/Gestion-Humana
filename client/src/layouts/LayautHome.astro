@@ -1,0 +1,32 @@
+---
+import "../styles/global.css";
+import { ViewTransitions } from "astro:transitions";
+import ClerkWrapper from "@/auth/ClerkWrapper";
+import Header from "@/components/astro/Header.astro";
+import { slide } from "astro:transitions";
+import ToasterProvider from "@/components/ui/ToasterProvider";
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Gestion Humana</title>
+    <Header />
+    <ViewTransitions />
+  </head>
+
+  <body
+    class="min-h-screen flex flex-col bg-linear-to-tr from-blue-100 to-pink-100"
+  >
+    <ClerkWrapper client:load>
+      <ToasterProvider />
+      <main transition:animate={slide({ duration: "0.4s" })}>
+        <slot />
+      </main>
+    </ClerkWrapper>
+  </body>
+</html>
