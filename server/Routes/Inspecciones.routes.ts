@@ -19,7 +19,7 @@ RoutesGET.get("/botiquin", getBotiquines);
 
 RoutesGET.get("/camilla", getCamillas);
 
-RoutesGET.get("/extintor", getExtintores);
+RoutesGET.get("/extintores", getExtintores);
 
 RoutesGET.get("/herramienta", getHerramientas);
 

@@ -41,7 +41,7 @@ export const getExtintores = async (req = request, res = response) => {
       ],
     });
     const count = await Extintores.count({ where: whereClause });
-    res.status(200).json({ count, datos: extintores, page, pageSize });
+    res.status(200).json({ count, datos: extintores, page, pageSize, message: "Extintores retrieved successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error retrieving extintores", error });
   }

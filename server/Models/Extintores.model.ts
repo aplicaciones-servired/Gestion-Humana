@@ -37,7 +37,7 @@ export class Extintores extends Model<
 }
 
 export const initExtintoresModel = (zona: string) => {
-  const empresa = zona === "servired" ? GestionServiredDB : GestionMultiredDB;
+  const empresa = zona === "Multired" ? GestionMultiredDB : GestionServiredDB;
   Extintores.init(
     {
       ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },

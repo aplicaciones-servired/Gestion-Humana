@@ -1,7 +1,7 @@
 import express from 'express'   
 import cors from 'cors'
 import morgan from 'morgan'
-import { RoutesGET } from './Routes/Bicicleta.routes'
+import { RoutesGET } from './Routes/Inspecciones.routes'
 
 const app = express()
 
