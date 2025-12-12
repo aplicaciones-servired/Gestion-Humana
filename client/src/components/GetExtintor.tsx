@@ -1,14 +1,11 @@
 import React from "react";
+import TableExtintor from "./extintor/TableExtintor";
 
-interface ExtintorProps {
-  datos: string;
-}
 
-function GetExtintor({ datos }: ExtintorProps): React.ReactElement {
+function GetExtintor(): React.ReactElement {
   return (
     <div>
-      <h2>Componente GetExtintor</h2>
-      <p>Datos recibidos: {datos}</p>
+      <TableExtintor DataExtintor="hola"/>
     </div>
   );
 }
