@@ -1,5 +1,7 @@
+import { useState } from "react";
 import type { Proteccion } from "@/Types/Proteccion.d";
 import { useFiltersProteccion } from "@/Hooks/useFiltersProteccion";
+import DialogProteccion from "./DialogProteccion";
 
 interface TableProteccionProps {
     DataProteccion: Proteccion[];
@@ -8,6 +10,8 @@ interface TableProteccionProps {
 
 const TableProteccion = ({ DataProteccion, pagination }: TableProteccionProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersProteccion(DataProteccion);
+    const [selectedItem, setSelectedItem] = useState<Proteccion | null>(null);
+    const [open, setOpen] = useState(false);
 
     return (
         <section className="container px-4 mx-auto bg-white rounded-md h-full">
@@ -67,7 +71,10 @@ const TableProteccion = ({ DataProteccion, pagination }: TableProteccionProps) =
                                     </tr>
                                 ) : (
                                     filteredData.map((proteccion) => (
-                                        <tr key={proteccion.id} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
+                                        <tr key={proteccion.id} onClick={() => {
+                                            setOpen(true);
+                                            setSelectedItem(proteccion);
+                                        }} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
                                             <td className="px-4 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                                                 {proteccion.fecha_inspeccion}
                                             </td>
@@ -88,6 +95,13 @@ const TableProteccion = ({ DataProteccion, pagination }: TableProteccionProps) =
                     </div>
                 </div>
             </div>
+            {open && (
+                <DialogProteccion
+                    open={open}
+                    handleClose={() => setOpen(false)}
+                    id={selectedItem?.id ? Number(selectedItem.id) : undefined}
+                />
+            )}
             {pagination && (
                 <div className="mt-6 mb-4">
                     {pagination}

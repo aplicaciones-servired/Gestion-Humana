@@ -1,5 +1,7 @@
+import { useState } from "react";
 import type { Camilla } from "@/Types/Camilla.d";
 import { useFiltersCamilla } from "@/Hooks/useFiltersCamilla";
+import DialogCamilla from "./DialogCamilla";
 
 interface TableCamillaProps {
     DataCamilla: Camilla[];
@@ -8,6 +10,8 @@ interface TableCamillaProps {
 
 const TableCamilla = ({ DataCamilla, pagination }: TableCamillaProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersCamilla(DataCamilla);
+    const [selectedItem, setSelectedItem] = useState<Camilla | null>(null);
+    const [open, setOpen] = useState(false);
 
     return (
         <section className="container px-4 mx-auto bg-white rounded-md h-full">
@@ -70,7 +74,10 @@ const TableCamilla = ({ DataCamilla, pagination }: TableCamillaProps) => {
                                     </tr>
                                 ) : (
                                     filteredData.map((camilla) => (
-                                        <tr key={camilla.ID} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
+                                        <tr key={camilla.ID} onClick={() => {
+                                            setOpen(true);
+                                            setSelectedItem(camilla);
+                                        }} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
                                             <td className="px-4 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                                                 {camilla.fecha_inspeccion}
                                             </td>
@@ -94,6 +101,13 @@ const TableCamilla = ({ DataCamilla, pagination }: TableCamillaProps) => {
                     </div>
                 </div>
             </div>
+            {open && (
+                <DialogCamilla
+                    open={open}
+                    handleClose={() => setOpen(false)}
+                    id={selectedItem?.ID ? Number(selectedItem.ID) : undefined}
+                />
+            )}
             {pagination && (
                 <div className="mt-6 mb-4">
                     {pagination}

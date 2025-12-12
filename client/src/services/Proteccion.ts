@@ -14,7 +14,7 @@ interface ProteccionPagi {
   totalClients: number;
 }
 
-export const useProteccion = (fecha_inspeccion?: string) => {
+export const useProteccion = (fecha_inspeccion?: string, id?: number | undefined) => {
   const [dataProteccion, setDataProteccion] = useState<Proteccion[]>([]);
   const [ProteccionSegui, setProteccionSegui] = useState<Proteccion[]>([]);
   const [page, setPage] = useState(1);
@@ -23,7 +23,7 @@ export const useProteccion = (fecha_inspeccion?: string) => {
     totalClients: 0,
   });
   const [totalCount, setTotalCount] = useState<number>();
-  const { empresa } = useEmpresa();
+  const { empresa} = useEmpresa();
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -31,6 +31,9 @@ export const useProteccion = (fecha_inspeccion?: string) => {
         let url = `${API_URL}/proteccion?zona=${empresa}&page=${page}&pageSize=${pageSize}`;
         if (fecha_inspeccion) {
           url = url.concat(`&fecha_inspeccion=${fecha_inspeccion}`);
+        }
+        if (id) {
+          url = url.concat(`&id=${id}`);
         }
 
         const response = await axios.get<ProteccionResponse>(url);
@@ -52,7 +55,7 @@ export const useProteccion = (fecha_inspeccion?: string) => {
     fetchData();
     const interval = setInterval(fetchData, 60000);
     return () => clearInterval(interval);
-  }, [empresa, page, pageSize, fecha_inspeccion]);
+  }, [empresa, page, pageSize, fecha_inspeccion, id]);
 
   const total = Math.ceil(state.totalClients / pageSize);
   const handlePageChange = (newPage: number) => {

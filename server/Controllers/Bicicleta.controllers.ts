@@ -9,6 +9,7 @@ export const getBicicletas = async (req: Request, res: Response) => {
   const fecha_inspeccion = req.query.fecha_inspeccion as string;
   const fechaInicio = req.query.fechaInicio as string;
   const fechaFin = req.query.fechaFin as string;
+  const ID = req.query.ID as string;
 
   let whereClause: any = {};
 
@@ -19,6 +20,10 @@ export const getBicicletas = async (req: Request, res: Response) => {
   } else if (fecha_inspeccion) {
     whereClause.fecha_inspeccion = {
       [Op.eq]: fecha_inspeccion,
+    };
+  } else if (ID) {
+    whereClause.ID = {
+      [Op.eq]: ID,
     };
   }
 

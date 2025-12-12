@@ -1,5 +1,7 @@
+import { useState } from "react";
 import type { Locativa } from "@/Types/Locativa.d";
 import { useFiltersLocativa } from "@/Hooks/useFiltersLocativa";
+import DialogLocativa from "./DialogLocativa";
 
 interface TableLocativaProps {
     DataLocativa: Locativa[];
@@ -8,6 +10,8 @@ interface TableLocativaProps {
 
 const TableLocativa = ({ DataLocativa, pagination }: TableLocativaProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersLocativa(DataLocativa);
+    const [selectedItem, setSelectedItem] = useState<Locativa | null>(null);
+    const [open, setOpen] = useState(false);
 
     return (
         <section className="container px-4 mx-auto bg-white rounded-md h-full">
@@ -67,7 +71,10 @@ const TableLocativa = ({ DataLocativa, pagination }: TableLocativaProps) => {
                                     </tr>
                                 ) : (
                                     filteredData.map((locativa) => (
-                                        <tr key={locativa.id} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
+                                        <tr key={locativa.id} onClick={() => {
+                                            setOpen(true);
+                                            setSelectedItem(locativa);
+                                        }} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
                                             <td className="px-4 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                                                 {locativa.fecha_inspeccion}
                                             </td>
@@ -88,6 +95,13 @@ const TableLocativa = ({ DataLocativa, pagination }: TableLocativaProps) => {
                     </div>
                 </div>
             </div>
+            {open && (
+                <DialogLocativa
+                    open={open}
+                    handleClose={() => setOpen(false)}
+                    id={selectedItem?.id ? Number(selectedItem.id) : undefined}
+                />
+            )}
             {pagination && (
                 <div className="mt-6 mb-4">
                     {pagination}

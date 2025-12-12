@@ -1,5 +1,7 @@
+import { useState } from "react";
 import type { Bicicleta } from "@/Types/Bicicleta.d";
 import { useFiltersBicicleta } from "@/Hooks/useFiltersBicicleta";
+import DialogBicicleta from "./DialogBicicleta";
 
 interface TableBicicletaProps {
     DataBicicleta: Bicicleta[];
@@ -8,6 +10,8 @@ interface TableBicicletaProps {
 
 const TableBicicleta = ({ DataBicicleta, pagination }: TableBicicletaProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersBicicleta(DataBicicleta);
+    const [selectedItem, setSelectedItem] = useState<Bicicleta | null>(null);
+    const [open, setOpen] = useState(false);
 
     return (
         <section className="container px-4 mx-auto bg-white rounded-md h-full">
@@ -73,7 +77,10 @@ const TableBicicleta = ({ DataBicicleta, pagination }: TableBicicletaProps) => {
                                     </tr>
                                 ) : (
                                     filteredData.map((bicicleta) => (
-                                        <tr key={bicicleta.ID} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
+                                        <tr key={bicicleta.ID} onClick={() => {
+                                            setOpen(true);
+                                            setSelectedItem(bicicleta);
+                                        }} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
                                             <td className="px-4 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                                                 {bicicleta.fecha_inspeccion}
                                             </td>
@@ -100,6 +107,13 @@ const TableBicicleta = ({ DataBicicleta, pagination }: TableBicicletaProps) => {
                     </div>
                 </div>
             </div>
+             {open && (
+                <DialogBicicleta
+                    open={open}
+                    handleClose={() => setOpen(false)}
+                    id={selectedItem?.ID ? Number(selectedItem.ID) : undefined}
+                />
+            )}
             {pagination && (
                 <div className="mt-6 mb-4">
                     {pagination}

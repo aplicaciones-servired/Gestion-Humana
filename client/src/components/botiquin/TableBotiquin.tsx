@@ -1,5 +1,7 @@
+import { useState } from "react";
 import type { Botiquin } from "@/Types/Botiquin.d";
 import { useFiltersBotiquin } from "@/Hooks/useFiltersBotiquin";
+import DialogBotiquin from "./DialogBotiquin";
 
 interface TableBotiquinProps {
     DataBotiquin: Botiquin[];
@@ -8,6 +10,8 @@ interface TableBotiquinProps {
 
 const TableBotiquin = ({ DataBotiquin, pagination }: TableBotiquinProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersBotiquin(DataBotiquin);
+    const [selectedItem, setSelectedItem] = useState<Botiquin | null>(null);
+    const [open, setOpen] = useState(false);
 
     return (
         <section className="container px-4 mx-auto bg-white rounded-md h-full">
@@ -67,7 +71,10 @@ const TableBotiquin = ({ DataBotiquin, pagination }: TableBotiquinProps) => {
                                     </tr>
                                 ) : (
                                     filteredData.map((botiquin) => (
-                                        <tr key={botiquin.id} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
+                                        <tr key={botiquin.id} onClick={() => {
+                                            setOpen(true);
+                                            setSelectedItem(botiquin);
+                                        }} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
                                             <td className="px-4 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                                                 {botiquin.fecha_inspeccion}
                                             </td>
@@ -88,6 +95,13 @@ const TableBotiquin = ({ DataBotiquin, pagination }: TableBotiquinProps) => {
                     </div>
                 </div>
             </div>
+            {open && (
+                <DialogBotiquin
+                    open={open}
+                    handleClose={() => setOpen(false)}
+                    id={selectedItem?.id ? Number(selectedItem.id) : undefined}
+                />
+            )}
             {pagination && (
                 <div className="mt-6 mb-4">
                     {pagination}

@@ -14,7 +14,7 @@ interface HerraminetasPagi {
   totalClients: number;
 }
 
-export const useHerraminetas = (fecha_inspeccion?: string) => {
+export const useHerraminetas = (fecha_inspeccion?: string, id?: number | undefined) => {
   const [dataHerraminetas, setDataHerraminetas] = useState<Herraminetas[]>([]);
   const [HerraminetasSegui, setHerraminetasSegui] = useState<Herraminetas[]>([]);
   const [page, setPage] = useState(1);
@@ -31,6 +31,9 @@ export const useHerraminetas = (fecha_inspeccion?: string) => {
         let url = `${API_URL}/herramienta?zona=${empresa}&page=${page}&pageSize=${pageSize}`;
         if (fecha_inspeccion) {
           url = url.concat(`&fecha_inspeccion=${fecha_inspeccion}`);
+        }
+        if (id) {
+          url = url.concat(`&id=${id}`);
         }
 
         const response = await axios.get<HerraminetasResponse>(url);
@@ -52,7 +55,7 @@ export const useHerraminetas = (fecha_inspeccion?: string) => {
     fetchData();
     const interval = setInterval(fetchData, 60000);
     return () => clearInterval(interval);
-  }, [empresa, page, pageSize, fecha_inspeccion]);
+  }, [empresa, page, pageSize, fecha_inspeccion, id]);
 
   const total = Math.ceil(state.totalClients / pageSize);
   const handlePageChange = (newPage: number) => {

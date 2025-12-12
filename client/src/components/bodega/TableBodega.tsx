@@ -1,5 +1,7 @@
+import { useState } from "react";
 import type { Bodega } from "@/Types/Bodega.d";
 import { useFiltersBodega } from "@/Hooks/useFiltersBodega";
+import DialogBodega from "./DialogBodega";
 
 interface TableBodegaProps {
     DataBodega: Bodega[];
@@ -8,6 +10,8 @@ interface TableBodegaProps {
 
 const TableBodega = ({ DataBodega, pagination }: TableBodegaProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersBodega(DataBodega);
+    const [selectedItem, setSelectedItem] = useState<Bodega | null>(null);
+    const [open, setOpen] = useState(false);
 
     return (
         <section className="container px-4 mx-auto bg-white rounded-md h-full">
@@ -67,7 +71,10 @@ const TableBodega = ({ DataBodega, pagination }: TableBodegaProps) => {
                                     </tr>
                                 ) : (
                                     filteredData.map((bodega) => (
-                                        <tr key={bodega.id} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
+                                        <tr key={bodega.id} onClick={() => {
+                                            setOpen(true);
+                                            setSelectedItem(bodega);
+                                        }} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
                                             <td className="px-4 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                                                 {bodega.fecha_inspeccion}
                                             </td>
@@ -88,6 +95,13 @@ const TableBodega = ({ DataBodega, pagination }: TableBodegaProps) => {
                     </div>
                 </div>
             </div>
+            {open && (
+                <DialogBodega
+                    open={open}
+                    handleClose={() => setOpen(false)}
+                    id={selectedItem?.id ? Number(selectedItem.id) : undefined}
+                />
+            )}
             {pagination && (
                 <div className="mt-6 mb-4">
                     {pagination}

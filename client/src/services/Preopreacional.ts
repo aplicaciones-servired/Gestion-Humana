@@ -14,7 +14,7 @@ interface PreopreacionalPagi {
   totalClients: number;
 }
 
-export const usePreopreacional = (fecha?: string) => {
+export const usePreopreacional = (fecha?: string, id?: number | undefined) => {
   const [dataPreopreacional, setDataPreopreacional] = useState<Preopreacional[]>([]);
   const [PreopreacionalSegui, setPreopreacionalSegui] = useState<Preopreacional[]>([]);
   const [page, setPage] = useState(1);
@@ -31,6 +31,9 @@ export const usePreopreacional = (fecha?: string) => {
         let url = `${API_URL}/preoperacional?page=${page}&pageSize=${pageSize}`;
         if (fecha) {
           url = url.concat(`&fecha=${fecha}`);
+        }
+        if (id) {
+          url = url.concat(`&id=${id}`);
         }
 
         const response = await axios.get<PreopreacionalResponse>(url);
@@ -52,7 +55,7 @@ export const usePreopreacional = (fecha?: string) => {
     fetchData();
     const interval = setInterval(fetchData, 60000);
     return () => clearInterval(interval);
-  }, [empresa, page, pageSize, fecha]);
+  }, [empresa, page, pageSize, fecha, id]);
 
   const total = Math.ceil(state.totalClients / pageSize);
   const handlePageChange = (newPage: number) => {

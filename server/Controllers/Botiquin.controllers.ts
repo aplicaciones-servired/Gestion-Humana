@@ -10,6 +10,7 @@ export const getBotiquines = async (req = request, res = response) => {
   const fecha_inspeccion = req.query.fecha_inspeccion as string;
   const fechaInicio = req.query.fechaInicio as string;
   const fechaFin = req.query.fechaFin as string;
+  const id = req.query.id as string;
 
   if (zona === undefined) {
     res.status(400).json("Zona no válida");
@@ -27,6 +28,10 @@ export const getBotiquines = async (req = request, res = response) => {
   } else if (fecha_inspeccion) {
     whereClause.fecha_inspeccion = {
       [Op.eq]: fecha_inspeccion,
+    };
+  } else if (id) {
+    whereClause.id = {
+      [Op.eq]: id,
     };
   }
   try {

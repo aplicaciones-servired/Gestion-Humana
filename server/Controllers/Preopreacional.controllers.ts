@@ -9,6 +9,7 @@ export const getPreoperacionales = async (req = request, res = response) => {
   const fecha = req.query.fecha as string;
   const fechaInicio = req.query.fechaInicio as string;
   const fechaFin = req.query.fechaFin as string;
+  const id = req.query.id as string;
 
   let whereClause: any = {};
 
@@ -19,6 +20,10 @@ export const getPreoperacionales = async (req = request, res = response) => {
   } else if (fecha) {
     whereClause.fecha = {
       [Op.eq]: fecha,
+    };
+  } else if (id) {
+    whereClause.id = {
+      [Op.eq]: id,
     };
   }
 

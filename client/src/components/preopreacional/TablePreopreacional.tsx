@@ -1,5 +1,7 @@
+import { useState } from "react";
 import type { Preopreacional } from "@/Types/Preopreacional.d";
 import { useFiltersPreopreacional } from "@/Hooks/useFiltersPreopreacional";
+import DialogPreopreacional from "./DialogPreopreacional";
 
 interface TablePreopreacionalProps {
     DataPreopreacional: Preopreacional[];
@@ -8,6 +10,8 @@ interface TablePreopreacionalProps {
 
 const TablePreopreacional = ({ DataPreopreacional, pagination }: TablePreopreacionalProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersPreopreacional(DataPreopreacional);
+    const [selectedItem, setSelectedItem] = useState<Preopreacional | null>(null);
+    const [open, setOpen] = useState(false);
 
     return (
         <section className="container px-4 mx-auto bg-white rounded-md h-full">
@@ -70,7 +74,10 @@ const TablePreopreacional = ({ DataPreopreacional, pagination }: TablePreopreaci
                                     </tr>
                                 ) : (
                                     filteredData.map((preopreacional) => (
-                                        <tr key={preopreacional.id} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
+                                        <tr key={preopreacional.id} onClick={() => {
+                                            setOpen(true);
+                                            setSelectedItem(preopreacional);
+                                        }} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
                                             <td className="px-4 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                                                 {preopreacional.fecha}
                                             </td>
@@ -94,6 +101,13 @@ const TablePreopreacional = ({ DataPreopreacional, pagination }: TablePreopreaci
                     </div>
                 </div>
             </div>
+            {open && (
+                <DialogPreopreacional
+                    open={open}
+                    handleClose={() => setOpen(false)}
+                    id={selectedItem?.id ? Number(selectedItem.id) : undefined}
+                />
+            )}
             {pagination && (
                 <div className="mt-6 mb-4">
                     {pagination}

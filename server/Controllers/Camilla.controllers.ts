@@ -10,6 +10,7 @@ export const getCamillas = async (req = request, res = response) => {
   const fecha_inspeccion = req.query.fecha_inspeccion as string;
   const fechaInicio = req.query.fechaInicio as string;
   const fechaFin = req.query.fechaFin as string;
+  const ID = req.query.ID as string;
 
   if (zona === undefined) {
     res.status(400).json("Zona no válida");
@@ -28,6 +29,10 @@ export const getCamillas = async (req = request, res = response) => {
   } else if (fecha_inspeccion) {
     whereClause.fecha_inspeccion = {
       [Op.eq]: fecha_inspeccion,
+    };
+  } else if (ID) {
+    whereClause.ID = {
+      [Op.eq]: ID,
     };
   }
 

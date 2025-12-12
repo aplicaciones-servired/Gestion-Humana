@@ -14,7 +14,7 @@ interface LocativaPagi {
   totalClients: number;
 }
 
-export const useLocativa = (fecha_inspeccion?: string) => {
+export const useLocativa = (fecha_inspeccion?: string, id?: number | undefined) => {
   const [dataLocativa, setDataLocativa] = useState<Locativa[]>([]);
   const [LocativaSegui, setLocativaSegui] = useState<Locativa[]>([]);
   const [page, setPage] = useState(1);
@@ -31,6 +31,9 @@ export const useLocativa = (fecha_inspeccion?: string) => {
         let url = `${API_URL}/locativa?zona=${empresa}&page=${page}&pageSize=${pageSize}`;
         if (fecha_inspeccion) {
           url = url.concat(`&fecha_inspeccion=${fecha_inspeccion}`);
+        }
+        if (id) {
+          url = url.concat(`&id=${id}`);
         }
 
         const response = await axios.get<LocativaResponse>(url);
@@ -52,7 +55,7 @@ export const useLocativa = (fecha_inspeccion?: string) => {
     fetchData();
     const interval = setInterval(fetchData, 60000);
     return () => clearInterval(interval);
-  }, [empresa, page, pageSize, fecha_inspeccion]);
+  }, [empresa, page, pageSize, fecha_inspeccion, id]);
 
   const total = Math.ceil(state.totalClients / pageSize);
   const handlePageChange = (newPage: number) => {
