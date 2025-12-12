@@ -10,6 +10,7 @@ export interface Extintor {
     capacidad:              string;
     proxima_recarga:        string;
     golpes:                 string;
+    acceso:                 string;
     manómetro:              string;
     pasador_seguridad:      string;
     manguera:               string;

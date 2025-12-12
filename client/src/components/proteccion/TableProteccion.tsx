@@ -3,9 +3,10 @@ import { useFiltersProteccion } from "@/Hooks/useFiltersProteccion";
 
 interface TableProteccionProps {
     DataProteccion: Proteccion[];
+    pagination?: React.ReactNode;
 }
 
-const TableProteccion = ({ DataProteccion }: TableProteccionProps) => {
+const TableProteccion = ({ DataProteccion, pagination }: TableProteccionProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersProteccion(DataProteccion);
 
     return (
@@ -87,6 +88,11 @@ const TableProteccion = ({ DataProteccion }: TableProteccionProps) => {
                     </div>
                 </div>
             </div>
+            {pagination && (
+                <div className="mt-6 mb-4">
+                    {pagination}
+                </div>
+            )}
         </section>
     );
 }

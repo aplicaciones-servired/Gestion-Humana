@@ -3,9 +3,10 @@ import { useFiltersBicicleta } from "@/Hooks/useFiltersBicicleta";
 
 interface TableBicicletaProps {
     DataBicicleta: Bicicleta[];
+    pagination?: React.ReactNode;
 }
 
-const TableBicicleta = ({ DataBicicleta }: TableBicicletaProps) => {
+const TableBicicleta = ({ DataBicicleta, pagination }: TableBicicletaProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersBicicleta(DataBicicleta);
 
     return (
@@ -99,6 +100,11 @@ const TableBicicleta = ({ DataBicicleta }: TableBicicletaProps) => {
                     </div>
                 </div>
             </div>
+            {pagination && (
+                <div className="mt-6 mb-4">
+                    {pagination}
+                </div>
+            )}
         </section>
     );
 }

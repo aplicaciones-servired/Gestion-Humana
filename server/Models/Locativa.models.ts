@@ -56,7 +56,7 @@ export class Locativa extends Model<
 }
 
 export const initLocativaModel = (zona: string) => {
-  const locativa = zona === "servired" ? GestionServiredDB : GestionMultiredDB;
+  const locativa = zona === "Servired" ? GestionServiredDB : GestionMultiredDB;
   Locativa.init(
     {
       id: {

@@ -84,7 +84,7 @@ export class Botiquin extends Model<
 }
 
 export const initBotiquinModel = (zona: string) => {
-  const empresa = zona === "servired" ? GestionServiredDB : GestionMultiredDB;
+  const empresa = zona === "Servired" ? GestionServiredDB : GestionMultiredDB;
   Botiquin.init(
     {
       id: {

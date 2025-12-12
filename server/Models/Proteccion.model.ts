@@ -53,7 +53,7 @@ export class Proteccion extends Model<
 
 export const initProteccionModel = (zona: string) => {
   const proteccion =
-    zona === "servired" ? GestionServiredDB : GestionMultiredDB;
+    zona === "Servired" ? GestionServiredDB : GestionMultiredDB;
   Proteccion.init(
     {
       id: {

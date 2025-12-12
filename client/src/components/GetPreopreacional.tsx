@@ -7,15 +7,16 @@ function GetPreopreacional(): React.ReactElement {
   const { dataPreopreacional, handlePageChange, page, total } = usePreopreacional();
   
   return (
-    <div className="space-y-4">
-      <TablePreopreacional DataPreopreacional={dataPreopreacional} />
-      
-      <RenderFooterInspe
-        page={page}
-        total={total}
-        setPage={handlePageChange}
-      />
-    </div>
+    <TablePreopreacional 
+      DataPreopreacional={dataPreopreacional}
+      pagination={
+        <RenderFooterInspe
+          page={page}
+          total={total}
+          setPage={handlePageChange}
+        />
+      }
+    />
   );
 }
 

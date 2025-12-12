@@ -10,6 +10,7 @@ export const getExtintores = async (req = request, res = response) => {
   const fecha_inspeccion = req.query.fecha_inspeccion as string;
   const fechaInicio = req.query.fechaInicio as string;
   const fechaFin = req.query.fechaFin as string;
+  const ID = req.query.ID as string;
 
   if (zona === undefined) {
     res.status(400).json("Zona no válida");
@@ -29,7 +30,12 @@ export const getExtintores = async (req = request, res = response) => {
     whereClause.fecha_inspeccion = {
       [Op.eq]: fecha_inspeccion,
     };
+  } else if (ID) {
+    whereClause.ID = {
+      [Op.eq]: ID,
+    };
   }
+
   try {
     const extintores = await Extintores.findAll({
       where: whereClause,
@@ -41,7 +47,13 @@ export const getExtintores = async (req = request, res = response) => {
       ],
     });
     const count = await Extintores.count({ where: whereClause });
-    res.status(200).json({ count, datos: extintores, page, pageSize, message: "Extintores retrieved successfully" });
+    res.status(200).json({
+      count,
+      datos: extintores,
+      page,
+      pageSize,
+      message: "Extintores retrieved successfully",
+    });
   } catch (error) {
     res.status(500).json({ message: "Error retrieving extintores", error });
   }

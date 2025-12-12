@@ -31,7 +31,7 @@ export class Bodega extends Model<
 }
 
 export const initEmpresaModel = (zona: string) => {
-    const empresa = zona === 'servired' ? GestionServiredDB : GestionMultiredDB;
+    const empresa = zona === 'Servired' ? GestionServiredDB : GestionMultiredDB;
   Bodega.init(
     {
       id: {

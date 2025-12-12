@@ -7,15 +7,16 @@ function GetLocativa(): React.ReactElement {
   const { dataLocativa, handlePageChange, page, total } = useLocativa();
   
   return (
-    <div className="space-y-4">
-      <TableLocativa DataLocativa={dataLocativa} />
-      
-      <RenderFooterInspe
-        page={page}
-        total={total}
-        setPage={handlePageChange}
-      />
-    </div>
+    <TableLocativa 
+      DataLocativa={dataLocativa}
+      pagination={
+        <RenderFooterInspe
+          page={page}
+          total={total}
+          setPage={handlePageChange}
+        />
+      }
+    />
   );
 }
 

@@ -15,7 +15,7 @@ interface ExtintorPagi {
   totalClients: number;
 }
 
-export const useExtintor = (fecha_inspeccion?: string) => {
+export const useExtintor = (fecha_inspeccion?: string, id?: number | undefined) => {
   const [dataExtintor, setDataExtintor] = useState<Extintor[]>([]);
   const [ExtintorSegui, setExtintorSegui] = useState<Extintor[]>([]);
   const [page, setPage] = useState(1);
@@ -33,6 +33,8 @@ export const useExtintor = (fecha_inspeccion?: string) => {
         let url = `${API_URL}/extintores?zona=${empresa}&page=${page}&pageSize=${pageSize}`;
         if (fecha_inspeccion) {
           url = url.concat(`&fecha_inspeccion=${fecha_inspeccion}`);
+        }if (id) {
+          url = url.concat(`&ID=${id}`);
         }
 
         const response = await axios.get<ExtintorResponse>(url);

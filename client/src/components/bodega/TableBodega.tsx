@@ -3,9 +3,10 @@ import { useFiltersBodega } from "@/Hooks/useFiltersBodega";
 
 interface TableBodegaProps {
     DataBodega: Bodega[];
+    pagination?: React.ReactNode;
 }
 
-const TableBodega = ({ DataBodega }: TableBodegaProps) => {
+const TableBodega = ({ DataBodega, pagination }: TableBodegaProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersBodega(DataBodega);
 
     return (
@@ -87,6 +88,11 @@ const TableBodega = ({ DataBodega }: TableBodegaProps) => {
                     </div>
                 </div>
             </div>
+            {pagination && (
+                <div className="mt-6 mb-4">
+                    {pagination}
+                </div>
+            )}
         </section>
     );
 }

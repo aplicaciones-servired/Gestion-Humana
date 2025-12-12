@@ -7,15 +7,16 @@ function GetHerraminetas(): React.ReactElement {
   const { dataHerraminetas, handlePageChange, page, total } = useHerraminetas();
   
   return (
-    <div className="space-y-4">
-      <TableHerraminetas DataHerraminetas={dataHerraminetas} />
-      
-      <RenderFooterInspe
-        page={page}
-        total={total}
-        setPage={handlePageChange}
-      />
-    </div>
+    <TableHerraminetas 
+      DataHerraminetas={dataHerraminetas}
+      pagination={
+        <RenderFooterInspe
+          page={page}
+          total={total}
+          setPage={handlePageChange}
+        />
+      }
+    />
   );
 }
 

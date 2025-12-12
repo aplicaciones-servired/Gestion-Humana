@@ -3,9 +3,10 @@ import { useFiltersPreopreacional } from "@/Hooks/useFiltersPreopreacional";
 
 interface TablePreopreacionalProps {
     DataPreopreacional: Preopreacional[];
+    pagination?: React.ReactNode;
 }
 
-const TablePreopreacional = ({ DataPreopreacional }: TablePreopreacionalProps) => {
+const TablePreopreacional = ({ DataPreopreacional, pagination }: TablePreopreacionalProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersPreopreacional(DataPreopreacional);
 
     return (
@@ -93,6 +94,11 @@ const TablePreopreacional = ({ DataPreopreacional }: TablePreopreacionalProps) =
                     </div>
                 </div>
             </div>
+            {pagination && (
+                <div className="mt-6 mb-4">
+                    {pagination}
+                </div>
+            )}
         </section>
     );
 }

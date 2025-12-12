@@ -7,15 +7,16 @@ function GetCamilla(): React.ReactElement {
   const { dataCamilla, handlePageChange, page, total } = useCamilla();
   
   return (
-    <div className="space-y-4">
-      <TableCamilla DataCamilla={dataCamilla} />
-      
-      <RenderFooterInspe
-        page={page}
-        total={total}
-        setPage={handlePageChange}
-      />
-    </div>
+    <TableCamilla 
+      DataCamilla={dataCamilla}
+      pagination={
+        <RenderFooterInspe
+          page={page}
+          total={total}
+          setPage={handlePageChange}
+        />
+      }
+    />
   );
 }
 

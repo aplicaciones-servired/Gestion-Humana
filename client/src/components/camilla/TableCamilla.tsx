@@ -3,9 +3,10 @@ import { useFiltersCamilla } from "@/Hooks/useFiltersCamilla";
 
 interface TableCamillaProps {
     DataCamilla: Camilla[];
+    pagination?: React.ReactNode;
 }
 
-const TableCamilla = ({ DataCamilla }: TableCamillaProps) => {
+const TableCamilla = ({ DataCamilla, pagination }: TableCamillaProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersCamilla(DataCamilla);
 
     return (
@@ -93,6 +94,11 @@ const TableCamilla = ({ DataCamilla }: TableCamillaProps) => {
                     </div>
                 </div>
             </div>
+            {pagination && (
+                <div className="mt-6 mb-4">
+                    {pagination}
+                </div>
+            )}
         </section>
     );
 }

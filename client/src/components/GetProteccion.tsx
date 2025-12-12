@@ -7,15 +7,16 @@ function GetProteccion(): React.ReactElement {
   const { dataProteccion, handlePageChange, page, total } = useProteccion();
   
   return (
-    <div className="space-y-4">
-      <TableProteccion DataProteccion={dataProteccion} />
-      
-      <RenderFooterInspe
-        page={page}
-        total={total}
-        setPage={handlePageChange}
-      />
-    </div>
+    <TableProteccion 
+      DataProteccion={dataProteccion}
+      pagination={
+        <RenderFooterInspe
+          page={page}
+          total={total}
+          setPage={handlePageChange}
+        />
+      }
+    />
   );
 }
 

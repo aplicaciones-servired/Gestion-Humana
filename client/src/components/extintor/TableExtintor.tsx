@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { Extintor } from "@/Types/Extintor.d";
 import { useFiltersExtintor } from "@/Hooks/useFiltersExtintor";
+import CustomizedDialogs from "./DalogExtintor";
 
 interface TableExtintorProps {
     DataExtintor: Extintor[];
@@ -9,7 +10,8 @@ interface TableExtintorProps {
 
 const TableExtintor = ({ DataExtintor, pagination }: TableExtintorProps) => {
     const { filteredPDV, searchfecha, setSearchFecha } = useFiltersExtintor(DataExtintor);
-
+    const [selectedItem, setSelectedItem] = useState<Extintor | null>(null);
+    const [open, setOpen] = useState(false);
     return (
         <section className="container px-4 mx-auto bg-white rounded-md h-full">
             {/* Header con título y filtro de fecha */}
@@ -76,7 +78,10 @@ const TableExtintor = ({ DataExtintor, pagination }: TableExtintorProps) => {
                                     </tr>
                                 ) : (
                                     filteredPDV.map((extintor) => (
-                                        <tr key={extintor.ID} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
+                                        <tr key={extintor.ID} onClick={() => {
+                                            setOpen(true);
+                                            setSelectedItem(extintor);
+                                        }} className="hover:bg-blue-100 hover:shadow-md transition-all cursor-pointer">
                                             <td className="px-4 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                                                 {extintor.fecha_inspeccion}
                                             </td>
@@ -103,6 +108,13 @@ const TableExtintor = ({ DataExtintor, pagination }: TableExtintorProps) => {
                     </div>
                 </div>
             </div>
+            {open && (
+                <CustomizedDialogs
+                    open={open}
+                    handleClose={() => setOpen(false)}
+                    id={selectedItem?.ID ? Number(selectedItem.ID) : undefined}
+                />
+            )}
             {pagination && (
                 <div className="mt-6 mb-4">
                     {pagination}

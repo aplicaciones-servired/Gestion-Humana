@@ -3,9 +3,10 @@ import { useFiltersHerraminetas } from "@/Hooks/useFiltersHerraminetas";
 
 interface TableHerraminetasProps {
     DataHerraminetas: Herraminetas[];
+    pagination?: React.ReactNode;
 }
 
-const TableHerraminetas = ({ DataHerraminetas }: TableHerraminetasProps) => {
+const TableHerraminetas = ({ DataHerraminetas, pagination }: TableHerraminetasProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersHerraminetas(DataHerraminetas);
 
     return (
@@ -81,6 +82,11 @@ const TableHerraminetas = ({ DataHerraminetas }: TableHerraminetasProps) => {
                     </div>
                 </div>
             </div>
+            {pagination && (
+                <div className="mt-6 mb-4">
+                    {pagination}
+                </div>
+            )}
         </section>
     );
 }

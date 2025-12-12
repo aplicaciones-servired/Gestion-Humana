@@ -28,7 +28,7 @@ export const useBicicleta = (fecha_inspeccion?: string) => {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        let url = `${API_URL}/bicicleta?zona=${empresa}&page=${page}&pageSize=${pageSize}`;
+        let url = `${API_URL}/bicicleta?page=${page}&pageSize=${pageSize}`;
         if (fecha_inspeccion) {
           url = url.concat(`&fecha_inspeccion=${fecha_inspeccion}`);
         }

@@ -29,7 +29,7 @@ export class Camilla extends Model<
 }
 
 export const initCamillaModel = (zona: string) => {
-  const empresa = zona === "servired" ? GestionServiredDB : GestionMultiredDB;
+  const empresa = zona === "Servired" ? GestionServiredDB : GestionMultiredDB;
   Camilla.init(
     {
       ID: {

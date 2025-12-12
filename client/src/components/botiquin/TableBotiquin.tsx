@@ -3,9 +3,10 @@ import { useFiltersBotiquin } from "@/Hooks/useFiltersBotiquin";
 
 interface TableBotiquinProps {
     DataBotiquin: Botiquin[];
+    pagination?: React.ReactNode;
 }
 
-const TableBotiquin = ({ DataBotiquin }: TableBotiquinProps) => {
+const TableBotiquin = ({ DataBotiquin, pagination }: TableBotiquinProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersBotiquin(DataBotiquin);
 
     return (
@@ -87,6 +88,11 @@ const TableBotiquin = ({ DataBotiquin }: TableBotiquinProps) => {
                     </div>
                 </div>
             </div>
+            {pagination && (
+                <div className="mt-6 mb-4">
+                    {pagination}
+                </div>
+            )}
         </section>
     );
 }

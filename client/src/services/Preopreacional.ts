@@ -28,7 +28,7 @@ export const usePreopreacional = (fecha?: string) => {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        let url = `${API_URL}/preoperacional?&page=${page}&pageSize=${pageSize}`;
+        let url = `${API_URL}/preoperacional?page=${page}&pageSize=${pageSize}`;
         if (fecha) {
           url = url.concat(`&fecha=${fecha}`);
         }

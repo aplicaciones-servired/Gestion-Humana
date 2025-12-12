@@ -7,15 +7,16 @@ function GetBicicleta(): React.ReactElement {
   const { dataBicicleta, handlePageChange, page, total } = useBicicleta();
   
   return (
-    <div className="space-y-4">
-      <TableBicicleta DataBicicleta={dataBicicleta} />
-      
-      <RenderFooterInspe
-        page={page}
-        total={total}
-        setPage={handlePageChange}
-      />
-    </div>
+    <TableBicicleta 
+      DataBicicleta={dataBicicleta}
+      pagination={
+        <RenderFooterInspe
+          page={page}
+          total={total}
+          setPage={handlePageChange}
+        />
+      }
+    />
   );
 }
 

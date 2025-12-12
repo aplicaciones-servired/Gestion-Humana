@@ -3,9 +3,10 @@ import { useFiltersLocativa } from "@/Hooks/useFiltersLocativa";
 
 interface TableLocativaProps {
     DataLocativa: Locativa[];
+    pagination?: React.ReactNode;
 }
 
-const TableLocativa = ({ DataLocativa }: TableLocativaProps) => {
+const TableLocativa = ({ DataLocativa, pagination }: TableLocativaProps) => {
     const { filteredData, searchfecha, setSearchFecha } = useFiltersLocativa(DataLocativa);
 
     return (
@@ -87,6 +88,11 @@ const TableLocativa = ({ DataLocativa }: TableLocativaProps) => {
                     </div>
                 </div>
             </div>
+            {pagination && (
+                <div className="mt-6 mb-4">
+                    {pagination}
+                </div>
+            )}
         </section>
     );
 }

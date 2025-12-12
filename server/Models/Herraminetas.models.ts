@@ -62,7 +62,7 @@ export class Herraminetas extends Model<
 }
 
 export const initHerraminetasModel = (zona: string) => {
-  const empresa = zona === "servired" ? GestionServiredDB : GestionMultiredDB;
+  const empresa = zona === "Servired" ? GestionServiredDB : GestionMultiredDB;
 
   {
     Herraminetas.init(
