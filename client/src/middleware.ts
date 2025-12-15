@@ -42,7 +42,8 @@ export const onRequest = clerkMiddleware(
       userId &&
       isProtectedRoute(context.request) &&
       role !== "admin" &&
-      role !== "gestion humana"
+      role !== "gestion humana" &&
+      role !== "administracion"
     ) {
       clerkClient(context).sessions.revokeSession(sessionId);
       return Response.redirect(`${url.origin}/unauthorized`, 302);
