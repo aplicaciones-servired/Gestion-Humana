@@ -2,6 +2,9 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 
+# 👉 INSTALAR PNPM AQUÍ
+RUN npm install -g pnpm
+
 # Copiar el archivo .env ANTES de instalar dependencias
 COPY package*.json ./
 COPY .env ./

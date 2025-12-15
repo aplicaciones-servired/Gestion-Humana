@@ -7,6 +7,9 @@ WORKDIR /app
 # Instalar dependencias
 COPY . .
 
+# Instalar dependencias con pnpm
+RUN pnpm install
+
 RUN pnpm
 
 # Exponer el puerto
