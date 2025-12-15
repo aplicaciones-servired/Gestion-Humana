@@ -1,16 +1,23 @@
-# Base de Node.js versión 18
-FROM node:slim
+# Base de Node.js (misma versión que Jenkins)
+FROM node:20-slim
 
-# Cambiar a la carpeta de la aplicación
+# Carpeta de la app
 WORKDIR /app
 
-# Instalar dependencias
+# 🔥 Habilitar Corepack (OBLIGATORIO para pnpm)
+RUN corepack enable
+
+# Copiar solo lo necesario primero (mejor cache)
+COPY package.json pnpm-lock.yaml ./
+
+# Instalar dependencias con pnpm
+RUN pnpm install --frozen-lockfile
+
+# Copiar el resto del código
 COPY . .
 
-RUN yarn
-
-# Exponer el puerto
+# Exponer el puerto del backend
 EXPOSE 3000
 
-# Comando para ejecutar la aplicación
-CMD ["yarn", "start"]
+# Comando de arranque
+CMD ["pnpm", "start"]

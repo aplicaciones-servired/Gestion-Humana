@@ -1,30 +1,42 @@
+# =========================
 # Etapa de build
+# =========================
 FROM node:20-alpine AS build
 WORKDIR /app
 
-# Copiar el archivo .env ANTES de instalar dependencias
-COPY package*.json ./
-COPY .env ./
-RUN npm install --legacy-peer-deps
+# 🔥 Habilitar Corepack (necesario para pnpm)
+RUN corepack enable
 
+# Copiar archivos de dependencias
+COPY package.json pnpm-lock.yaml ./
+
+# Instalar dependencias
+RUN pnpm install --frozen-lockfile
+
+# Copiar el resto del proyecto
 COPY . .
 
-# Inyectar variables de entorno DURANTE EL BUILD
+# Variables públicas usadas en build (Astro)
 ENV PUBLIC_URL_API=/api
 ENV PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_Y2xlcmsuZ2VzdGlvbi5zZXJ2aXJlZGdhbmUuY2xvdWQk
 
-RUN npm run build
+# Build SSR
+RUN pnpm run build
 
-# Etapa final (servidor SSR)
+# =========================
+# Etapa final (runtime)
+# =========================
 FROM node:20-alpine
 WORKDIR /app
 
-COPY --from=build /app /app
-ENV NODE_ENV=production
+# Copiar solo lo necesario desde build
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/package.json ./package.json
 
-# Asegurar que el .env esté disponible
-COPY --from=build /app/.env ./
+ENV NODE_ENV=production
 
 EXPOSE 4321
 
+# Arranque del servidor Astro
 CMD ["node", "./dist/server/entry.mjs", "--host", "0.0.0.0", "--port", "4321"]
