@@ -6,10 +6,11 @@ import { Exportcom } from "./Exportcom";
 
 interface WelcomeProps {
   userRole?: string | null;
+  userEmpresa?: string | null;
 }
 
-function GetVehicular({ userRole }: WelcomeProps = {}): React.ReactElement {
-  const { dataVehicular, handlePageChange, page, total } = useVehicular();
+function GetVehicular({ userRole, userEmpresa }: WelcomeProps = {}): React.ReactElement {
+  const { dataVehicular, handlePageChange, page, total } = useVehicular(undefined, undefined, userRole, userEmpresa);
 
   return (
     <div>

@@ -22,7 +22,7 @@ import ToasterProvider from "@/components/ui/ToasterProvider";
   <body
     class="min-h-screen flex flex-col bg-linear-to-tr from-blue-100 to-pink-100"
   >
-    <ClerkWrapper client:load>
+    <ClerkWrapper client:only="react">
       <ToasterProvider client:load />
       <main transition:animate={slide({ duration: "0.4s" })}>
         <slot />

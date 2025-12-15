@@ -17,7 +17,9 @@ interface ProteccionPagi {
 
 export const useVehicular = (
   fecha?: string,
-  id?: number | undefined
+  id?: number | undefined,
+  userRole?: string | null,
+  userEmpresa?: string | null
 ) => {
   const [dataVehicular, setDataVehicular] = useState<Vehicular[]>([]);
   const [VehicularSegui, setVehicularSegui] = useState<Vehicular[]>([]);
@@ -28,17 +30,20 @@ export const useVehicular = (
   });
   const [totalCount, setTotalCount] = useState<number>();
   const { empresa } = useEmpresa();
-  console.log("Empresa en useVehicular:", empresa);
+
+  // Si es administración, usar la empresa del metadata, sino usar la del selector
+  const isAdministracion = userRole === "administracion";
+  const empresaActual = isAdministracion ? userEmpresa : empresa;
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        let url = `${API_URL}/vehicular?zona=${empresa}&page=${page}&pageSize=${pageSize}`;
+        let url = `${API_URL}/vehicular?zona=${empresaActual}&page=${page}&pageSize=${pageSize}`;
         if (fecha) {
           url = url.concat(`&fecha=${fecha}`);
         }
         if (id) {
-          url = `${API_URL}/vehicular/${id}?zona=${empresa}`;
+          url = `${API_URL}/vehicular/${id}?zona=${empresaActual}`;
         }
 
         const response = await axios.get<VehicularResponse>(url);
@@ -61,7 +66,7 @@ export const useVehicular = (
     fetchData();
     const interval = setInterval(fetchData, 60000);
     return () => clearInterval(interval);
-  }, [empresa, page, pageSize, fecha, id]);
+  }, [empresaActual, page, pageSize, fecha, id]);
 
   const total = Math.ceil(state.totalClients / pageSize);
   const handlePageChange = (newPage: number) => {

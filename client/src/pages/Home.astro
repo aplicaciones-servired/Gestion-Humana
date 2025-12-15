@@ -2,10 +2,11 @@
 import SiteLayout from "../layouts/LayautHome.astro";
 import Welcome from "../components/Welcome";
 
-// Obtener el rol del usuario desde locals (establecido por el middleware)
+// Obtener el rol y empresa del usuario desde locals (establecido por el middleware)
 const userRole = Astro.locals.userRole;
+const userEmpresa = Astro.locals.userEmpresa;
 ---
 
 <SiteLayout>
-  <Welcome client:load userRole={userRole} />
+  <Welcome client:only="react" userRole={userRole} userEmpresa={userEmpresa} />
 </SiteLayout>
