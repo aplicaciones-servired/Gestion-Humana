@@ -2,13 +2,10 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 
-# 👉 INSTALAR PNPM AQUÍ
-RUN npm install -g pnpm
-
 # Copiar el archivo .env ANTES de instalar dependencias
 COPY package*.json ./
 COPY .env ./
-RUN pnpm install --legacy-peer-deps
+RUN npm install --legacy-peer-deps
 
 COPY . .
 
@@ -16,7 +13,7 @@ COPY . .
 ENV PUBLIC_URL_API=/api
 ENV PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_Y2xlcmsuZ2VzdGlvbi5zZXJ2aXJlZGdhbmUuY2xvdWQk
 
-RUN pnpm run build
+RUN npm run build
 
 # Etapa final (servidor SSR)
 FROM node:20-alpine

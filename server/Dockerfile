@@ -7,13 +7,10 @@ WORKDIR /app
 # Instalar dependencias
 COPY . .
 
-# Instalar dependencias con pnpm
-RUN pnpm install
-
-RUN pnpm
+RUN yarn
 
 # Exponer el puerto
 EXPOSE 3000
 
 # Comando para ejecutar la aplicación
-CMD ["pnpm", "start"]
+CMD ["yarn", "start"]
