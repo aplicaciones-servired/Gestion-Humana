@@ -4,12 +4,16 @@ import TableVehicular from "@/components/vehicular/TableVehicular";
 import { RenderFooterInspe } from "./ui/paginationArq";
 import { Exportcom } from "./Exportcom";
 
-function GetVehicular(): React.ReactElement {
+interface WelcomeProps {
+  userRole?: string | null;
+}
+
+function GetVehicular({ userRole }: WelcomeProps = {}): React.ReactElement {
   const { dataVehicular, handlePageChange, page, total } = useVehicular();
 
   return (
     <div>
-      <Exportcom />
+      <Exportcom userRole={userRole} />
 
       <TableVehicular
         DataVehicular={dataVehicular}

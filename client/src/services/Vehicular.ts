@@ -28,6 +28,7 @@ export const useVehicular = (
   });
   const [totalCount, setTotalCount] = useState<number>();
   const { empresa } = useEmpresa();
+  console.log("Empresa en useVehicular:", empresa);
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {

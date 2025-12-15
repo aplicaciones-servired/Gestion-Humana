@@ -1,11 +1,11 @@
 ---
 import SiteLayout from "../layouts/LayautHome.astro";
 import Welcome from "../components/Welcome";
-import { SignedIn } from "@clerk/astro/react";
+
+// Obtener el rol del usuario desde locals (establecido por el middleware)
+const userRole = Astro.locals.userRole;
 ---
 
 <SiteLayout>
-  <SignedIn>
-    <Welcome client:only="react" />
-  </SignedIn>
+  <Welcome client:load userRole={userRole} />
 </SiteLayout>

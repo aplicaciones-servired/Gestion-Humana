@@ -5,6 +5,19 @@ import EmpresaSelector from "../EmpresaSelector";
 import HeaderLink from "./HeaderLink.astro";
 const { pathname } = Astro.url;
 const stickyHeader = true;
+
+// Obtener el rol del usuario desde locals
+const userRole = Astro.locals.userRole as string | null;
+
+// Filtrar el menú según el rol
+const filteredMenu = menu.main.filter((item) => {
+  // Si es usuario "administracion", solo mostrar Home
+  if (userRole === "administracion") {
+    return item.name === "Home";
+  }
+  // Admin y gestión humana ven todo
+  return true;
+});
 ---
 
 <header
@@ -17,7 +30,7 @@ const stickyHeader = true;
     <!-- Selector de Empresa (Izquierda) -->
     <div class="flex items-center">
       <div class="w-44">
-        <EmpresaSelector client:load />
+        <EmpresaSelector client:load userRole={userRole} userEmpresa={Astro.locals.userEmpresa} />
       </div>
     </div>
 
@@ -51,7 +64,7 @@ const stickyHeader = true;
       class="hidden peer-checked:flex flex-col md:flex md:flex-row absolute md:relative top-full left-0 right-0 md:top-auto bg-white md:bg-transparent md:mx-auto md:space-x-1 pb-6 md:pb-0 mt-4 md:mt-0 border-t md:border-0 border-gray-200/50 md:shadow-none shadow-lg z-50"
     >
       {
-        menu.main.map((item) => {
+        filteredMenu.map((item) => {
           const isActive = pathname === `${item.url}/` || pathname === item.url;
 
           if (item.hasChildren) {

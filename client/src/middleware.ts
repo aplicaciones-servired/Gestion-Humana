@@ -8,6 +8,15 @@ import {
 // Rutas protegidas del FRONTEND
 const isProtectedRoute = createRouteMatcher([
   "/Home(.*)",
+  "/Extintor(.*)",
+  "/Bodega(.*)",
+  "/Botiquin(.*)",
+  "/Bicicleta(.*)",
+  "/Camilla(.*)",
+  "/Proteccion(.*)",
+  "/Herraminetas(.*)",
+  "/Preopreacional(.*)",
+  "/Locativa(.*)",
 ]);
 
 // Página de login
@@ -31,10 +40,15 @@ export const onRequest = clerkMiddleware(
     // 🎯 Obtener usuario y rol cuando está autenticado
     let user = null;
     let role = null;
+    let empresa = null;
 
     if (userId) {
       user = await clerkClient(context).users.getUser(userId);
-      role = user.privateMetadata.role;
+      role = user.publicMetadata.role as string | undefined;
+      empresa = user.publicMetadata.empresa as string | undefined;
+      // Pasar el rol y empresa a Astro.locals para que estén disponibles en los componentes
+      context.locals.userRole = role || null;
+      context.locals.userEmpresa = empresa || null;
     }
 
     // 🚫 Usuario con sesión pero SIN permisos → enviar a expulsión
@@ -54,6 +68,28 @@ export const onRequest = clerkMiddleware(
       return Response.redirect(`${url.origin}/Home`, 302);
     }
 
+    // 🔒 Proteger rutas de inspecciones para usuario "administracion"
+    // Solo pueden acceder admin y gestion humana
+    const inspeccionRoutes = [
+      "/Extintor",
+      "/Bodega",
+      "/Botiquin",
+      "/Bicicleta",
+      "/Camilla",
+      "/Proteccion",
+      "/Herraminetas",
+      "/Preopreacional",
+      "/Locativa",
+    ];
+
+    const isInspeccionRoute = inspeccionRoutes.some((route) =>
+      pathname.startsWith(route)
+    );
+
+    if (userId && isInspeccionRoute && role === "administracion") {
+      return Response.redirect(`${url.origin}/Home`, 302);
+    }
+
     const response = await next();
 
     // Evitar cache en rutas sensibles
@@ -69,9 +105,6 @@ export const onRequest = clerkMiddleware(
     return response;
   },
   {
-    authorizedParties: [
-      "http://localhost:4321",
-      "http://localhost:3000",
-    ],
+    authorizedParties: ["http://localhost:4321", "http://localhost:3000"],
   }
 );

@@ -7,7 +7,7 @@ import type { Herraminetas } from "@/Types/Herraminetas";
 import type { Locativa } from "@/Types/Locativa";
 import type { Preopreacional } from "@/Types/Preopreacional";
 import type { Proteccion } from "@/Types/Proteccion";
-import { Workbook } from "exceljs";
+import ExcelJS from "exceljs";
 import { toast } from "sonner";
 
 
@@ -24,7 +24,7 @@ export const exportarAExcel = async ({
 }: PropsExport): Promise<void> => {
   if (!registros || registros.length === 0) return;
 
-  const wb = new Workbook();
+  const wb = new ExcelJS.Workbook();
   const ws = wb.addWorksheet("Registros");
 
   const headersSet = new Set<string>();

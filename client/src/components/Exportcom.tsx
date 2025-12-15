@@ -1,18 +1,25 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { toast } from "sonner";
-import { API_URL, Inspecciones } from "@/utils/constans";
+import { API_URL, getInspeccionesPorRol } from "@/utils/constans";
 import axios from "axios";
 import { useEmpresa } from "./ui/useEmpresa";
 import { exportarAExcel } from "./ui/Export";
+import { useUserRole } from "@/Hooks/useUserRole";
 
+interface ExportcomProps {
+  userRole?: string | null;
+}
 
-export const Exportcom = () => {
+export const ExportcomContent = ({ userRole }: ExportcomProps) => {
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
   const [inspeccion, setInspeccion] = useState<string>("");
 
   // changed code: obtener empresa desde context/hook
   const { empresa } = useEmpresa();
+  
+  // Filtrar inspecciones según el rol
+  const inspeccionesDisponibles = useMemo(() => getInspeccionesPorRol(userRole), [userRole]);
 
   const exportarRegistros = async (): Promise<void> => {
     if (!fechaInicio || !fechaFin) {
@@ -123,7 +130,7 @@ export const Exportcom = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             >
               <option value="">Elige la inspección</option>
-              {Inspecciones.map((item) => (
+              {inspeccionesDisponibles.map((item) => (
                 <option key={item} value={item}>
                   {item}
                 </option>
@@ -163,3 +170,6 @@ export const Exportcom = () => {
     </section>
   );
 };
+
+// Exportar directamente el componente que recibe el rol como prop
+export const Exportcom = ExportcomContent;
