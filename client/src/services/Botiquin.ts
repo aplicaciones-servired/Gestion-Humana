@@ -3,6 +3,7 @@ import { useEmpresa } from "../components/ui/useEmpresa";
 import axios from "axios";
 import { API_URL } from "@/utils/constans";
 import type { Botiquin } from "@/Types/Botiquin.d";
+import { toast } from "sonner";
 
 interface BotiquinResponse {
   datos: Botiquin[];
@@ -48,7 +49,8 @@ export const useBotiquin = (fecha_inspeccion?: string, id?: number | undefined) 
           }));
         }
       } catch (error) {
-        console.error("Error fetching botiquines:", error);
+        const errorMessage = error instanceof Error ? error.message : "Error desconocido al obtener botiquines";
+        toast.error(`Error fetching botiquines: ${errorMessage}`);
       }
     };
 

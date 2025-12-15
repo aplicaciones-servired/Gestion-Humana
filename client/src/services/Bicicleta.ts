@@ -3,6 +3,7 @@ import { useEmpresa } from "../components/ui/useEmpresa";
 import axios from "axios";
 import { API_URL } from "@/utils/constans";
 import type { Bicicleta } from "@/Types/Bicicleta.d";
+import { toast } from "sonner";
 
 interface BicicletaResponse {
   datos: Bicicleta[];
@@ -48,7 +49,8 @@ export const useBicicleta = (fecha_inspeccion?: string, id?: number | undefined)
           }));
         }
       } catch (error) {
-        console.error("Error fetching bicicletas:", error);
+        const errorMessage = error instanceof Error ? error.message : "Error desconocido al obtener bicicletas";
+        toast.error(`Error fetching bicicletas: ${errorMessage}`);
       }
     };
 

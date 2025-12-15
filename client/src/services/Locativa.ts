@@ -3,6 +3,7 @@ import { useEmpresa } from "../components/ui/useEmpresa";
 import axios from "axios";
 import { API_URL } from "@/utils/constans";
 import type { Locativa } from "@/Types/Locativa.d";
+import { toast } from "sonner";
 
 interface LocativaResponse {
   datos: Locativa[];
@@ -48,7 +49,8 @@ export const useLocativa = (fecha_inspeccion?: string, id?: number | undefined) 
           }));
         }
       } catch (error) {
-        console.error("Error fetching locativas:", error);
+        const errorMessage = error instanceof Error ? error.message : "Error desconocido al obtener locativas";
+        toast.error(`Error fetching locativas: ${errorMessage}`);
       }
     };
 

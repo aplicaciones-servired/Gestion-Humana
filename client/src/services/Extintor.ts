@@ -3,6 +3,7 @@ import { useEmpresa } from "../components/ui/useEmpresa";
 import axios from "axios";
 import { API_URL } from "@/utils/constans";
 import type { Extintor } from "@/Types/Extintor.d";
+import { toast } from "sonner";
 
 
 interface ExtintorResponse {
@@ -49,7 +50,8 @@ export const useExtintor = (fecha_inspeccion?: string, id?: number | undefined) 
           }));
         }
       } catch (error) {
-        console.error("Error fetching extintores:", error);
+        const errorMessage = error instanceof Error ? error.message : "Error desconocido al obtener extintores";
+        toast.error(`Error fetching extintores: ${errorMessage}`);
       }
     };
 

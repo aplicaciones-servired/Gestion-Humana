@@ -3,6 +3,7 @@ import { useEmpresa } from "../components/ui/useEmpresa";
 import axios from "axios";
 import { API_URL } from "@/utils/constans";
 import type { Herraminetas } from "@/Types/Herraminetas.d";
+import { toast } from "sonner";
 
 interface HerraminetasResponse {
   datos: Herraminetas[];
@@ -48,7 +49,8 @@ export const useHerraminetas = (fecha_inspeccion?: string, id?: number | undefin
           }));
         }
       } catch (error) {
-        console.error("Error fetching herraminetas:", error);
+        const errorMessage = error instanceof Error ? error.message : "Error desconocido al obtener herraminetas";
+        toast.error(`Error fetching herraminetas: ${errorMessage}`);
       }
     };
 

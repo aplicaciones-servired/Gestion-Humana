@@ -1,7 +1,7 @@
 // --- Empresas y tipos disponibles
 export const empresas = ['Multired', 'Servired'];
 export const tipos = ['PROGRAMACION DEL MES', 'ARQUEO DE RETIRO'];
-export const Inspecciones = ['botiquin', 'extintor', 'camilla', 'herramientas', 'locativa', 'bicicleta', 'preoperacional', 'proteccion', 'bodega'];
+export const Inspecciones = ['Extintor', 'Bodega', 'Botiquin', 'Bicicleta', 'Camilla', 'Herramientas', 'Locativa', 'Preoperacional', 'Proteccion', 'Vehicular'];
 
 
 // --- Variables de entorno públicas (client + server)

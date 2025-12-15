@@ -3,6 +3,7 @@ import { useEmpresa } from "../components/ui/useEmpresa";
 import axios from "axios";
 import { API_URL } from "@/utils/constans";
 import type { Proteccion } from "@/Types/Proteccion.d";
+import { toast } from "sonner";
 
 interface ProteccionResponse {
   datos: Proteccion[];
@@ -14,7 +15,10 @@ interface ProteccionPagi {
   totalClients: number;
 }
 
-export const useProteccion = (fecha_inspeccion?: string, id?: number | undefined) => {
+export const useProteccion = (
+  fecha_inspeccion?: string,
+  id?: number | undefined
+) => {
   const [dataProteccion, setDataProteccion] = useState<Proteccion[]>([]);
   const [ProteccionSegui, setProteccionSegui] = useState<Proteccion[]>([]);
   const [page, setPage] = useState(1);
@@ -23,7 +27,7 @@ export const useProteccion = (fecha_inspeccion?: string, id?: number | undefined
     totalClients: 0,
   });
   const [totalCount, setTotalCount] = useState<number>();
-  const { empresa} = useEmpresa();
+  const { empresa } = useEmpresa();
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -48,7 +52,8 @@ export const useProteccion = (fecha_inspeccion?: string, id?: number | undefined
           }));
         }
       } catch (error) {
-        console.error("Error fetching protecciones:", error);
+        const errorMessage = error instanceof Error ? error.message : "Error desconocido al obtener protecciones";
+        toast.error(`Error fetching protecciones: ${errorMessage}`);
       }
     };
 

@@ -10,7 +10,6 @@ export function useInactivityLogout() {
   const resetTimer = () => {
     clearTimeout(inactivityTimer);
     inactivityTimer = setTimeout(async () => {
-      console.log('Sesión cerrada por inactividad');
       await signOut({ redirectUrl: '/' });
     }, INACTIVITY_TIMEOUT);
   };

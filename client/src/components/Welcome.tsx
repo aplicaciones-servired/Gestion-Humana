@@ -1,25 +1,28 @@
 import React from "react";
-import { useExtintor } from "@/services/Extintor";
-import TableExtintor from "@/components/extintor/TableExtintor";
+import { useVehicular } from "@/services/Vehicular";
+import TableVehicular from "@/components/vehicular/TableVehicular";
 import { RenderFooterInspe } from "./ui/paginationArq";
 import { Exportcom } from "./Exportcom";
 
-function GetExtintor(): React.ReactElement {
-  const { dataExtintor, handlePageChange, page, total } = useExtintor();
+function GetVehicular(): React.ReactElement {
+  const { dataVehicular, handlePageChange, page, total } = useVehicular();
 
   return (
     <div>
       <Exportcom />
 
-      <TableExtintor
-        DataExtintor={dataExtintor}
-        pagination={<RenderFooterInspe
-          page={page}
-          total={total}
-          setPage={handlePageChange} />} />
-
+      <TableVehicular
+        DataVehicular={dataVehicular}
+        pagination={
+          <RenderFooterInspe
+            page={page}
+            total={total}
+            setPage={handlePageChange}
+          />
+        }
+      />
     </div>
   );
 }
 
-export default GetExtintor;
+export default GetVehicular;

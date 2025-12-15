@@ -3,6 +3,7 @@ import { useEmpresa } from "../components/ui/useEmpresa";
 import axios from "axios";
 import { API_URL } from "@/utils/constans";
 import type { Camilla } from "@/Types/Camilla.d";
+import { toast } from "sonner";
 
 interface CamillaResponse {
   datos: Camilla[];
@@ -48,7 +49,8 @@ export const useCamilla = (fecha_inspeccion?: string, id?: number | undefined) =
           }));
         }
       } catch (error) {
-        console.error("Error fetching camillas:", error);
+        const errorMessage = error instanceof Error ? error.message : "Error desconocido al obtener camillas";
+        toast.error(`Error fetching camillas: ${errorMessage}`);
       }
     };
 

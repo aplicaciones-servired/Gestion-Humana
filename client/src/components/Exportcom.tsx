@@ -3,26 +3,13 @@ import { toast } from "sonner";
 import { API_URL, Inspecciones } from "@/utils/constans";
 import axios from "axios";
 import { useEmpresa } from "./ui/useEmpresa";
-import type { Bicicleta } from "@/Types/Bicicleta";
-import type { Bodega } from "@/Types/Bodega";
-import type { Botiquin } from "@/Types/Botiquin";
-import type { Camilla } from "@/Types/Camilla";
-import type { Extintor } from "@/Types/Extintor";
-import type { Herraminetas } from "@/Types/Herraminetas";
-import type { Locativa } from "@/Types/Locativa";
-import type { Preopreacional } from "@/Types/Preopreacional";
-import type { Proteccion } from "@/Types/Proteccion";
 import { exportarAExcel } from "./ui/Export";
 
-interface PropsExport {
-  data?: Extintor[] | Bodega[] | Botiquin[] | Bicicleta[] | Camilla[] | Herraminetas[] | Locativa[] | Preopreacional[] | Proteccion[];
-}
 
-export const Exportcom = ({ data }: PropsExport) => {
+export const Exportcom = () => {
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
   const [inspeccion, setInspeccion] = useState<string>("");
-
 
   // changed code: obtener empresa desde context/hook
   const { empresa } = useEmpresa();
@@ -73,6 +60,7 @@ export const Exportcom = ({ data }: PropsExport) => {
         "Locativa": "locativa",
         "Preoperacional": "preoperacional",
         "Proteccion": "proteccion",
+        "Vehicular": "vehicular",
       };
 
       const endpoint = endpointMap[inspeccion];
@@ -80,11 +68,12 @@ export const Exportcom = ({ data }: PropsExport) => {
         throw new Error("Inspección no válida");
       }
 
-      // Determinar si necesita zona o no (Bicicleta y Preoperacional no usan zona)
+      // Determinar si necesita zona o no (Bicicleta, Preoperacional y Vehicular usan zona)
       const needsZona = !["Bicicleta", "Preoperacional"].includes(inspeccion);
       const zonaParam = needsZona ? `zona=${empresa}&` : "";
       
       const url = `${base}/${endpoint}?${zonaParam}fechaInicio=${fechaInicio}&fechaFin=${fechaFin}&pageSize=1000000`;
+      console.log('first', url);
 
       const response = await axios.get(url);
       const todos: any[] = response.data?.datos ?? response.data ?? [];
@@ -106,7 +95,10 @@ export const Exportcom = ({ data }: PropsExport) => {
     toast.promise(promesa, {
       loading: "Consultando registros...",
       success: (count) => `Se encontraron ${count} registros`,
-      error: (err) => err.message || "Error al obtener registros",
+      error: (err) => {
+        const errorMessage = err instanceof Error ? err.message : "Error al obtener registros";
+        return errorMessage;
+      },
       duration: 9000,
     });
   };

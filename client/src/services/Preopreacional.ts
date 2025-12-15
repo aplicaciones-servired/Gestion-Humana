@@ -3,6 +3,7 @@ import { useEmpresa } from "../components/ui/useEmpresa";
 import axios from "axios";
 import { API_URL } from "@/utils/constans";
 import type { Preopreacional } from "@/Types/Preopreacional.d";
+import { toast } from "sonner";
 
 interface PreopreacionalResponse {
   datos: Preopreacional[];
@@ -48,7 +49,8 @@ export const usePreopreacional = (fecha?: string, id?: number | undefined) => {
           }));
         }
       } catch (error) {
-        console.error("Error fetching preopreacionales:", error);
+        const errorMessage = error instanceof Error ? error.message : "Error desconocido al obtener preopreacionales";
+        toast.error(`Error fetching preopreacionales: ${errorMessage}`);
       }
     };
 

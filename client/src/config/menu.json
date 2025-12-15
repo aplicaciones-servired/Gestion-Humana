@@ -44,6 +44,10 @@
         {
           "name": "Inspección Bicicleta",
           "url": "/Bicicleta"
+        },
+        {
+          "name": "Inspección Vehicular",
+          "url": "/Vehicular"
         }
       ]
     }

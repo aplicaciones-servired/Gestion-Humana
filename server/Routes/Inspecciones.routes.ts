@@ -8,6 +8,7 @@ import { getHerramientas } from "../Controllers/Herraminetas.controllers";
 import { getLocativas } from "../Controllers/Locativa.controllers";
 import { getPreoperacionales } from "../Controllers/Preopreacional.controllers";
 import { getProtecciones } from "../Controllers/Proteccion.controllers";
+import { getVehicular, getVehicularID } from "../Controllers/Vehicular.controllers";
 
 export const RoutesGET = Router();
 
@@ -28,3 +29,7 @@ RoutesGET.get("/locativa", getLocativas);
 RoutesGET.get("/preoperacional", getPreoperacionales);
 
 RoutesGET.get("/proteccion", getProtecciones);
+
+RoutesGET.get("/vehicular", getVehicular);
+
+RoutesGET.get("/vehicular/:id", getVehicularID);

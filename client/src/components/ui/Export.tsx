@@ -8,6 +8,7 @@ import type { Locativa } from "@/Types/Locativa";
 import type { Preopreacional } from "@/Types/Preopreacional";
 import type { Proteccion } from "@/Types/Proteccion";
 import { Workbook } from "exceljs";
+import { toast } from "sonner";
 
 
 interface PropsExport {
@@ -67,6 +68,7 @@ export const exportarAExcel = async ({
     a.click();
     window.URL.revokeObjectURL(url);
   } catch (err) {
-    console.error("Error exportando Excel:", err);
-  }
+    const errorMessage = err instanceof Error ? err.message : "Error desconocido al exportar Excel";
+    toast.error(`Error exportando Excel: ${errorMessage}`);
+  } 
 };
