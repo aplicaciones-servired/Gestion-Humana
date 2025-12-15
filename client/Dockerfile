@@ -5,7 +5,7 @@ WORKDIR /app
 # Copiar el archivo .env ANTES de instalar dependencias
 COPY package*.json ./
 COPY .env ./
-RUN npm install --legacy-peer-deps
+RUN pnpm install --legacy-peer-deps
 
 COPY . .
 
@@ -13,7 +13,7 @@ COPY . .
 ENV PUBLIC_URL_API=/api
 ENV PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_Y2xlcmsuZ2VzdGlvbi5zZXJ2aXJlZGdhbmUuY2xvdWQk
 
-RUN npm run build
+RUN pnpm run build
 
 # Etapa final (servidor SSR)
 FROM node:20-alpine
