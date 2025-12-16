@@ -22,6 +22,9 @@ const isProtectedRoute = createRouteMatcher([
 // Página de login
 const isLoginPage = createRouteMatcher(["/"]);
 
+// Página de no autorizado (pública)
+const isUnauthorizedPage = createRouteMatcher(["/unauthorized"]);
+
 export const onRequest = clerkMiddleware(
   async (auth, context, next) => {
     const { userId, redirectToSignIn, sessionId } = auth();
@@ -34,7 +37,7 @@ export const onRequest = clerkMiddleware(
     }
 
     // ⛔ Si es página protegida y NO hay sesión → redirigir a login
-    if (!userId && isProtectedRoute(context.request)) {
+    if (!userId && isProtectedRoute(context.request) && !isUnauthorizedPage(context.request)) {
       return redirectToSignIn({ returnBackUrl: url.href });
     }
     // 🎯 Obtener usuario y rol cuando está autenticado
