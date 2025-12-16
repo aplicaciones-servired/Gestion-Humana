@@ -20,6 +20,10 @@ COPY . .
 ENV PUBLIC_URL_API=/api
 ENV PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_Y2xlcmsuZ2VzdGlvbi5zZXJ2aXJlZGdhbmUuY2xvdWQk
 
+# ⚠️ IMPORTANTE: Clerk requiere esta variable en tiempo de BUILD también
+ARG CLERK_SECRET_KEY
+ENV CLERK_SECRET_KEY=${CLERK_SECRET_KEY}
+
 # Build SSR
 RUN pnpm run build
 

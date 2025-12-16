@@ -88,8 +88,8 @@ pipeline {
     stage('run docker compose') {
       steps {
         script {
-          // ❌ Ya no usamos --env-file porque no existe un .env global
-          // ✅ docker-compose cargará automáticamente server/.env y client/.env
+          // ✅ Pasar CLERK_SECRET_KEY como build argument para el cliente
+          sh "docker compose build --build-arg CLERK_SECRET_KEY=${CLERK_SECRET_KEY_GESTION} web_gestion"
           sh 'docker compose up -d'
         }
       }
