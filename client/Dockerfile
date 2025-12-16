@@ -17,10 +17,8 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Variables públicas usadas en build (Astro)
-ARG PUBLIC_URL_API=/api
-ARG PUBLIC_CLERK_PUBLISHABLE_KEY
-ENV PUBLIC_URL_API=${PUBLIC_URL_API}
-ENV PUBLIC_CLERK_PUBLISHABLE_KEY=${PUBLIC_CLERK_PUBLISHABLE_KEY}
+ENV PUBLIC_URL_API=/api
+ENV PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_Y2xlcmsuZ2VzdGlvbi5zZXJ2aXJlZGdhbmUuY2xvdWQk
 
 # ⚠️ IMPORTANTE: Clerk requiere esta variable en tiempo de BUILD también
 ARG CLERK_SECRET_KEY
