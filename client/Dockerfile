@@ -41,9 +41,14 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
 
-# ⚠️ Copiar el archivo .env para que esté disponible en runtime
-COPY --from=build /app/.env ./.env
+# ⚠️ Variables necesarias en RUNTIME para Clerk
+ARG PUBLIC_CLERK_PUBLISHABLE_KEY
+ARG CLERK_SECRET_KEY
+ARG PUBLIC_URL_API=/api
 
+ENV PUBLIC_CLERK_PUBLISHABLE_KEY=${PUBLIC_CLERK_PUBLISHABLE_KEY}
+ENV CLERK_SECRET_KEY=${CLERK_SECRET_KEY}
+ENV PUBLIC_URL_API=${PUBLIC_URL_API}
 ENV NODE_ENV=production
 
 EXPOSE 4321
