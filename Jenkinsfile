@@ -19,8 +19,8 @@ pipeline {
           def env_server = readFile(ENV_SERVER_GESTION)
           def env_client = readFile(ENV_CLIENT_GESTION)
           
-          // Añadir clave Clerk al env del cliente
-          def env_client_completo = env_client + "\nCLERK_SECRET_KEY_GESTION=${CLERK_SECRET_KEY_GESTION}\n"
+          // Añadir clave Clerk al env del cliente (sin el sufijo _GESTION)
+          def env_client_completo = env_client + "\nCLERK_SECRET_KEY=${CLERK_SECRET_KEY_GESTION}\n"
           
           writeFile file: './server/.env', text: env_server
           writeFile file: './client/.env', text: env_client_completo
@@ -29,7 +29,7 @@ pipeline {
           sh 'ls -la ./server/.env'
           sh 'ls -la ./client/.env'
           sh 'cat ./client/.env | grep PUBLIC_URL_API'
-          sh 'cat ./client/.env | grep CLERK_SECRET_KEY_GESTION'
+          sh 'cat ./client/.env | grep CLERK_SECRET_KEY'
         }
       }
     }
