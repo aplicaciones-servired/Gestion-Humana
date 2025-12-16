@@ -88,14 +88,8 @@ pipeline {
     stage('run docker compose') {
       steps {
         script {
-          // Extraer PUBLIC_CLERK_PUBLISHABLE_KEY del .env del cliente
-          def clerk_public_key = sh(script: "grep '^PUBLIC_CLERK_PUBLISHABLE_KEY=' ./client/.env | cut -d '=' -f2", returnStdout: true).trim()
-          
-          // ✅ Pasar todas las variables necesarias como build arguments
-          sh """docker compose build \
-            --build-arg CLERK_SECRET_KEY=${CLERK_SECRET_KEY_GESTION} \
-            --build-arg PUBLIC_CLERK_PUBLISHABLE_KEY=${clerk_public_key} \
-            web_gestion"""
+          // ✅ Pasar CLERK_SECRET_KEY como build argument para el cliente
+          sh "docker compose build --build-arg CLERK_SECRET_KEY=${CLERK_SECRET_KEY_GESTION} web_gestion"
           sh 'docker compose up -d'
         }
       }
