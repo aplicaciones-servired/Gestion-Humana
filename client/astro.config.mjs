@@ -8,22 +8,21 @@ import { esES } from '@clerk/localizations'
 
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
+  adapter: node({
+    mode: "standalone",
+  }),
+  server: {
+    host: true,
+    port: 4321,
+  },
+  vite: {
+    plugins: [tailwindcss()],
+  },
   integrations: [
     react(),
     clerk({
       localization: esES,
     }),
   ],
-  adapter: node({
-    mode: 'standalone'
-  }),
-  output: "server",
-  server: {
-    host: '0.0.0.0',
-    port: 4321
-  },
-
-  vite: {
-    plugins: [tailwindcss()]
-  }
 });

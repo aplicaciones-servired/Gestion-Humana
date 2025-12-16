@@ -105,6 +105,6 @@ export const onRequest = clerkMiddleware(
     return response;
   },
   {
-    authorizedParties: ["http://localhost:4321", "http://localhost:3000"],
+    authorizedParties: ["http://localhost:4321", "http://localhost:3000", "https://gestion.serviredgane.cloud/"],
   }
 );

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec tsx ./index.ts",
     "start": "tsc && node --env-file=.env ./dist/index.js"
